@@ -14,7 +14,7 @@ function StartState:update(dt)
     end
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('play')
+        gStateMachine:change('intro')
     end
 end
 
@@ -39,5 +39,5 @@ function StartState:render()
 
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.setFont(gFonts['small'])
-    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 128, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(gText['startScreen'], 0, VIRTUAL_HEIGHT / 2 + 128, VIRTUAL_WIDTH, 'center')
 end
