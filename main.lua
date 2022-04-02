@@ -1,5 +1,13 @@
 require 'src/Dependencies'
 
+development = true
+
+if development then
+    function love.conf(t)
+        t.console = true
+    end
+end
+
 function love.load()
     math.randomseed(os.time())
     love.window.setTitle('Vesuvius')
@@ -15,6 +23,7 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
+        ['intro'] = function() return IntroState() end,
     }
     gStateMachine:change('start')
 
