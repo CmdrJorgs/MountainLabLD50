@@ -32,6 +32,8 @@ require 'src/states/game/IntroState'
 
 require 'src/volcano/Volcano'
 
+require 'src/volcano/Volcano'
+
 gTextures = {
     ['badge'] = love.graphics.newImage('graphics/branding/badge.png'),
     --['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
