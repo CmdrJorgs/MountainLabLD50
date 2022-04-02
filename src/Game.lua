@@ -3,7 +3,7 @@ Game = Class{}
 function Game:init()
 
     -- current room we're operating in
-    self.map = Map(self.player)
+    self.map = Map()
 
     -- love.graphics.translate values, only when shifting screens
     self.cameraX = 0
