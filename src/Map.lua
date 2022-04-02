@@ -8,8 +8,8 @@ function Map:init()
     --self:generateWallsAndFloors()
 
     -- entities in the room
-    self.entities = {}
-    --self:generateEntities()
+    self.creatures = {}
+    self:generateCreatures()
 
     -- game objects in the room
     self.objects = {}
@@ -18,41 +18,40 @@ function Map:init()
     -- used for centering the dungeon rendering
     --self.renderOffsetX = MAP_RENDER_OFFSET_X
     --self.renderOffsetY = MAP_RENDER_OFFSET_Y
+
+    -- if we ever have to move the viewport we can use this
+    self.adjacentOffsetX = 0
+    self.adjacentOffsetY = 0
 end
 
 --[[
     Randomly creates an assortment of enemies for the player to fight.
 ]]
---function Map:generateEntities()
---    local types = {'skeleton', 'slime', 'bat', 'ghost', 'spider'}
---
---    for i = 1, 10 do
---        local type = types[math.random(#types)]
---
---        table.insert(self.entities, Entity {
---            animations = ENTITY_DEFS[type].animations,
---            walkSpeed = ENTITY_DEFS[type].walkSpeed or 20,
---
---            -- ensure X and Y are within bounds of the map
---            x = math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
---                VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
---            y = math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
---                VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16),
---
---            width = 16,
---            height = 16,
---
---            health = 1
---        })
---
---        self.entities[i].stateMachine = StateMachine {
---            ['walk'] = function() return EntityWalkState(self.entities[i]) end,
---            ['idle'] = function() return EntityIdleState(self.entities[i]) end
---        }
---
---        self.entities[i]:changeState('walk')
---    end
---end
+function Map:generateCreatures()
+    local species = {'bull', 'goat', 'lamb', 'dog', 'bird', 'wheat', 'wine', 'purple toga human', 'pants barbarian', 'white toga human', 'blue tunic human', 'egyptian hat human'}
+    --local color = {'none', 'white', 'purple', 'blue'} TODO
+
+    for i = 1, INIT_CREATURE_COUNT do
+        --local type = species[math.random(#species)]
+        local type = 'bull'
+
+        table.insert(self.creatures, Creature {
+            animations = CREATURE_DEFS[type].animations,
+            walkSpeed = CREATURE_DEFS[type].walkSpeed or 20,
+            x = math.random(0, VIRTUAL_WIDTH),
+            y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT),
+            width = CREATURE_DEFS[type].imageWidth,
+            height =  CREATURE_DEFS[type].imageHeight,
+        })
+
+        self.creatures[i].stateMachine = StateMachine {
+            --['walk'] = function() return EntityWalkState(self.creatures[i]) end,
+            ['idle'] = function() return EntityIdleState(self.creatures[i]) end
+        }
+
+        self.creatures[i]:changeState('idle')
+    end
+end
 
 --[[
     Randomly creates an assortment of obstacles for the player to navigate around.
@@ -129,61 +128,19 @@ end
 --end
 
 function Map:update(dt)
-    -- don't update anything if we are sliding to another room (we have offsets)
-    --if self.adjacentOffsetX ~= 0 or self.adjacentOffsetY ~= 0 then return end
-    --
-    --self.player:update(dt)
-    --
-    --for i = #self.entities, 1, -1 do
-    --    local entity = self.entities[i]
-    --
-    --    -- remove entity from the table if health is <= 0
-    --    if entity.health <= 0 then
-    --        entity.dead = true
-    --    elseif not entity.dead then
-    --        entity:processAI({room = self}, dt)
-    --        entity:update(dt)
-    --    end
-    --
-    --    -- collision between the player and entities in the room
-    --    if not entity.dead and self.player:collides(entity) and not self.player.invulnerable then
-    --        gSounds['hit-player']:play()
-    --        self.player:damage(1)
-    --        self.player:goInvulnerable(1.5)
-    --
-    --        if self.player.health == 0 then
-    --            gStateMachine:change('game-over')
-    --        end
-    --    end
-    --
-    --    if not entity.dead then
-    --        for k,projectile in pairs(self.projectiles) do
-    --            if not projectile.dead and projectile:collides(entity) then
-    --                entity:damage(1)
-    --                gSounds['hit-enemy']:play()
-    --                projectile:changeState('explode')
-    --            end
-    --        end
-    --    end
-    --end
-    --
-    --for k, object in pairs(self.objects) do
-    --    object:update(dt)
-    --
-    --    -- trigger collision callback on object
-    --    if self.player:collides(object) then
-    --        object:onCollide()
-    --    end
-    --end
-    --
-    --for k, projectile in pairs(self.projectiles) do
-    --    projectile:update(dt)
-    --
-    --    -- trigger collision callback on object
-    --    --if self.player:collides(projectile) then
-    --    --    projectile:onCollide()
-    --    --end
-    --end
+    -- self.cursor:update(dt)
+
+    for i = #self.creatures, 1, -1 do
+        local entity = self.creatures[i]
+
+        -- remove entity from the table if health is <= 0
+        entity:processAI({room = self}, dt)
+        entity:update(dt)
+    end
+
+    for k, object in pairs(self.objects) do
+        object:update(dt)
+    end
 end
 
 function Map:render()
@@ -191,4 +148,12 @@ function Map:render()
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, GROUND_HEIGHT)
     love.graphics.setColor(204/255, 192/255, 0, 1)
     love.graphics.rectangle("fill", 0, GROUND_HEIGHT, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+
+    for k, object in pairs(self.objects) do
+        object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+    end
+
+    for k, entity in pairs(self.creatures) do
+        entity:render(self.adjacentOffsetX, self.adjacentOffsetY)
+    end
 end
