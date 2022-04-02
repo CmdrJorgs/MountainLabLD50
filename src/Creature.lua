@@ -21,13 +21,7 @@ function Creature:init(def)
 
     self.health = def.health
 
-    -- flags for flashing the entity when hit
-    self.invulnerable = false
-    self.invulnerableDuration = 0
-    self.invulnerableTimer = 0
-    self.flashTimer = 0
-
-    self.dead = false
+    --self.dead = false
 end
 
 function Creature:createAnimations(animations)
@@ -35,7 +29,7 @@ function Creature:createAnimations(animations)
 
     for k, animationDef in pairs(animations) do
         animationsReturned[k] = Animation {
-            texture = animationDef.texture or 'entities',
+            texture = animationDef.texture,
             frames = animationDef.frames,
             interval = animationDef.interval
         }
@@ -70,9 +64,9 @@ function Creature:update(dt)
 end
 
 -- if we want the entity to walk around on its own us this --
---function Creature:processAI(params, dt)
---    self.stateMachine:processAI(params, dt)
---end
+function Creature:processAI(params, dt)
+    self.stateMachine:processAI(params, dt)
+end
 
 function Creature:render(adjacentOffsetX, adjacentOffsetY)
     self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0)
