@@ -14,6 +14,15 @@ local NormalState = require "src/volcano/states/NormalState"
 local ExplodingState = require "src/volcano/states/ExplodingState"
 local ExplodedState = require "src/volcano/states/ExplodedState"
 
+-- local helper functions
+local function generate_explode_callback(state_machine)
+    return function()
+        state_machine:change("exploding", {
+            exploded_callback = function() state_machine:change("exploded", {}) end
+        })
+    end
+end
+
 --[[
     The volcano has three main states:
     - Normal: The normal gameplay loop - the volcano slowly builds up anger, develops cravings,
@@ -29,17 +38,9 @@ function Volcano:init()
         exploded = ExplodedState,
     }
     -- Enter the normal state, passing state change functions into the parameters
-    self.state_machine.change("normal", { 
+    self.state_machine:change("normal", { 
         explode_callback = generate_explode_callback(self.state_machine) 
     })
-end
-
-function generate_explode_callback(state_machine)
-    return function()
-        state_machine:change("exploding", {
-            exploded_callback = function() state_machine:change("exploded", {}) end
-        })
-    end
 end
 
 function Volcano:is_exploded()
@@ -51,12 +52,12 @@ function Volcano:is_exploded()
     end
 end
 
-function Volcano:update()
-    self.state_machine:update()
+function Volcano:update(dt)
+    self.state_machine:update(dt)
 end
 
-function Volcano:processAI()
-    self.state_machine:processAI()
+function Volcano:processAI(params, dt)
+    self.state_machine:processAI(params, dt)
 end
 
 function Volcano:accept_offering(offering)

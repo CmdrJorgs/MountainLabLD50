@@ -29,6 +29,8 @@ require 'src/states/BaseState'
 --require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
 require 'src/states/game/IntroState'
+require 'src/states/game/PlayState'
+require 'src/states/game/GameOverState'
 
 require 'src/volcano/Volcano'
 

@@ -1,5 +1,6 @@
-local ExplodingState = Class{_includes = BaseState}
+local ExplodingState = Class{__includes = BaseState}
 
+local SCREEN_WIPE_TIME = 5
 local EXPLOSION_TIME = 6
 
 function ExplodingState:enter(enterParams)
@@ -18,6 +19,8 @@ function ExplodingState:update(dt)
 end
 
 function ExplodingState:render()
+    love.graphics.setColor(1,0.7,0)
+    love.graphics.rectangle("fill",0,0,VIRTUAL_WIDTH,self.current_time / SCREEN_WIPE_TIME * VIRTUAL_HEIGHT)
     -- TODO: Draw the volcano exploding here
 end
 

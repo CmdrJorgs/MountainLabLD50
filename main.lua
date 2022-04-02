@@ -24,6 +24,8 @@ function love.load()
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
         ['intro'] = function() return IntroState() end,
+        ['play'] = function() return PlayState() end,
+        ['gameOver'] = function() return GameOverState() end
     }
     gStateMachine:change('start')
 
@@ -48,6 +50,7 @@ end
 function love.update(dt)
     Timer.update(dt)
     gStateMachine:update(dt)
+    gStateMachine:processAI({}, dt)
 
     love.keyboard.keysPressed = {}
 end
