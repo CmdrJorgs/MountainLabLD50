@@ -9,13 +9,13 @@ Timer = require 'lib/knife.timer'
 
 require 'src/Animation'
 require 'src/constants/constants'
---require 'src/Entity'
+require 'src/Creature'
 require 'src/StateMachine'
 --require 'src/Util'
 
 --require 'src/world/Doorway'
---require 'src/world/Dungeon'
---require 'src/world/Room'
+require 'src/Game'
+require 'src/Map'
 
 require 'src/states/BaseState'
 --
@@ -29,6 +29,7 @@ require 'src/states/BaseState'
 --require 'src/states/game/PlayState'
 require 'src/states/game/StartState'
 require 'src/states/game/IntroState'
+require 'src/states/game/PlayState'
 
 gTextures = {
     ['badge'] = love.graphics.newImage('graphics/branding/badge.png'),
