@@ -9,7 +9,7 @@ gTextures = {
 }
 
 gFrames = {
-    ['bull'] = GenerateQuads(gTextures['bull'], CREATURE_DEFS['bull'].framesWidth, CREATURE_DEFS['bull'].framesHeight)
+    ['bull'] = GenerateQuads(gTextures['bull'], CREATURE_DEFS['bull'].width, CREATURE_DEFS['bull'].height)
     --['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
     --['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     --['character-pot-walk'] = GenerateQuads(gTextures['character-pot-walk'], 16, 32),
