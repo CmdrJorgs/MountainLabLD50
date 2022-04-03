@@ -130,7 +130,7 @@ end
 function Map:update(dt)
     -- self.cursor:update(dt)
 
-    for k, creature in pairs(self.objects) do
+    for k, creature in pairs(self.creatures) do
         creature:processAI({}, dt)
         creature:update(dt)
     end
@@ -146,9 +146,9 @@ function Map:render()
     love.graphics.setColor(204/255, 192/255, 0, 1)
     love.graphics.rectangle("fill", 0, GROUND_HEIGHT, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    for k, object in pairs(self.objects) do
-        object:render(self.adjacentOffsetX, self.adjacentOffsetY)
-    end
+    --for k, object in pairs(self.objects) do
+    --    object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+    --end
 
     for k, entity in pairs(self.creatures) do
         entity:render(self.adjacentOffsetX, self.adjacentOffsetY)
