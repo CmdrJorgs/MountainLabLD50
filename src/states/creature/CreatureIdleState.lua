@@ -13,7 +13,7 @@ end
 
 function CreatureIdleState:processAI(params, dt)
     if self.waitDuration == 0 then
-        self.waitDuration = math.random(5)
+        self.waitDuration = math.random(10)
     else
         self.waitTimer = self.waitTimer + dt
 

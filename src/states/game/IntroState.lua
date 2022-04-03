@@ -22,5 +22,6 @@ function IntroState:render()
     love.graphics.clear(0, 0, 0)
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.setFont(gFonts['small'])
-    love.graphics.printf(gText['introText'], 0, VIRTUAL_HEIGHT / 2 + 128, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(gText['introText'], 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf(gText['startScreen'], 0, VIRTUAL_HEIGHT / 2 + 128, VIRTUAL_WIDTH, 'center')
 end

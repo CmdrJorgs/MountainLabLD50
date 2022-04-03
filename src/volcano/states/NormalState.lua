@@ -60,6 +60,9 @@ local function try_generate_craving(self)
 end
 
 -- state management
+function NormalState:init(volcano)
+    self.volcano = volcano
+end
 
 function NormalState:enter(enterParams)
     self.anger = 0
@@ -160,7 +163,31 @@ end
 -- render
 
 function NormalState:render()
-    -- TODO: Draw the volcano vibing
+    local VOLCANO_STAGE = 1
+    if self.anger < 10 then
+        VOLCANO_STAGE = 1
+    elseif self.anger < 50 then
+        VOLCANO_STAGE = 2
+    elseif self.anger < 75 then
+        VOLCANO_STAGE = 3
+    elseif self.anger < 95 then
+        VOLCANO_STAGE = 4
+    else
+        VOLCANO_STAGE = 5
+    end
+    --love.graphics.draw(gTextures['volcano'], gFrames['volcano'][1], VIRTUAL_WIDTH / 2, 0, 0, 1, 1, gTextures['volcano']:getWidth/2, gTextures['volcano']:getHeight/2)
+    love.graphics.draw(
+            gTextures['volcano'],
+            gFrames['volcano'][VOLCANO_STAGE],
+            VIRTUAL_WIDTH / 2,
+            GROUND_HEIGHT - (self.volcano.height / 2) + 20,
+            0,
+            1,
+            1,
+            self.volcano.width / 2,
+            self.volcano.height / 2
+    )
+
     -- TODO: Definitely decide where this should go
     love.graphics.setColor(1,1,1,1)
     love.graphics.setFont(gFonts['small'])
