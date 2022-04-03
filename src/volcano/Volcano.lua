@@ -31,7 +31,7 @@ end
     - Exploded: The volcano has erupted - we should transfer the main game to Game Over at this point
 ]]
 
-function Volcano:init()
+function Volcano:init(params)
     self.state_machine = StateMachine{
         normal = NormalState,
         exploding = ExplodingState,
@@ -39,7 +39,8 @@ function Volcano:init()
     }
     -- Enter the normal state, passing state change functions into the parameters
     self.state_machine:change("normal", { 
-        explode_callback = generate_explode_callback(self.state_machine) 
+        explode_callback = generate_explode_callback(self.state_machine),
+        feedback_reporter = params.feedback_reporter,
     })
 end
 
