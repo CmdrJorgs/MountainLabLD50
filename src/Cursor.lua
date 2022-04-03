@@ -15,6 +15,7 @@ function Cursor:init(params)
     self.dx = 0
     self.dy = 0
     self.grabbed_creature = nil
+    self.attempting_grab = false
 end
 
 function Cursor:update(dt)
@@ -25,19 +26,22 @@ function Cursor:update(dt)
     self.dy = (mouse_y - self.y) / dt
     self.x = mouse_x
     self.y = mouse_y
+    local mouse_button_is_down = love.mouse.isDown(1)
 
     if not self.grabbed_creature then
-        if love.mouse.isDown(1) then
-            local best_creature = self:get_best_overlapping_creature()
-            if best_creature then
-                self.grabbed_creature = best_creature
-                self.grabbed_creature:enter_grab()
+        if mouse_button_is_down then
+            if not self.attempting_grab then
+                local best_creature = self:get_best_overlapping_creature()
+                if best_creature then
+                    self.grabbed_creature = best_creature
+                    self.grabbed_creature:enter_grab()
+                end
             end
         end
     else
         self.grabbed_creature.x = self.x - self.grabbed_creature.width / 2
         self.grabbed_creature.y = self.y - self.grabbed_creature.height / 2
-        if not love.mouse.isDown(1) then
+        if not mouse_button_is_down then
             self.grabbed_creature:exit_grab({
                 dx = self.dx,
                 dy = self.dy
@@ -45,6 +49,7 @@ function Cursor:update(dt)
             self.grabbed_creature = nil
         end
     end
+    self.attempting_grab = mouse_button_is_down
 end
 
 function Cursor:get_best_overlapping_creature()
@@ -94,6 +99,7 @@ function Cursor:get_best_overlapping_creature()
 end
 
 function Cursor:render()
-    -- TODO: If this is at all important, draw a custom cursor here
-    --love.graphics.draw(gTextures['badge'], self.x, self.y)
+    -- TODO: Don't hardcode the cursor values
+    local frameIndex = (self.attempting_grab and 2) or 1
+    love.graphics.draw(gTextures['cursor'], gFrames['cursor'][frameIndex], self.x - 8, self.y - 8)
 end
