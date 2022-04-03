@@ -18,8 +18,8 @@ CREATURE_DEFS = {
         species = 'sheep',
         grabSound = 'hey-sheep',
         color = 'none',
-        height = 20,
         width = 25,
+        height = 20,
         walkSpeed = 5,
         texture = 'sheep',
         animations = {
@@ -44,8 +44,8 @@ CREATURE_DEFS = {
         species = 'blueTogaHuman',
         color = 'blue',
         grabSound = 'oi',
-        height = 48,
         width = 50,
+        height = 48,
         walkSpeed = 15,
         texture = 'blueTogaHuman',
         animations = {
@@ -70,8 +70,8 @@ CREATURE_DEFS = {
         species = 'whiteTogaHuman',
         color = 'white',
         grabSound = 'deephey',
-        height = 46,
         width = 22,
+        height = 46,
         walkSpeed = 15,
         texture = 'whiteTogaHuman',
         animations = {
@@ -92,7 +92,59 @@ CREATURE_DEFS = {
             },
         },
     },
-    ['greekCitizen'] = {
+    ['goat'] = {
+        species = 'goat',
+        grabSound = 'hey-sheep',
+        color = 'none',
+        width = 20,
+        height = 19,
+        walkSpeed = 5,
+        texture = 'goat',
+        animations = {
+            ['idle-down'] = {
+                frames = { 1, 2, 3 },
+                interval = 0.2,
+                texture = 'goat',
+            },
+            ['grabbed-down'] = {
+                frames = { 1, 2 },
+                interval = 0.02,
+                texture = 'goat',
+            },
+            ['fall-down'] = {
+                frames = { 1, 2, 3 },
+                interval = 0.2,
+                texture = 'goat',
+            },
+        },
+    },
+    ['bird'] = {
+        species = 'bird',
+        grabSound = 'oi',
+        color = 'none',
+        width = 30,
+        height = 28,
+        walkSpeed = 25,
+        texture = 'bird',
+        animations = {
+            ['idle-down'] = {
+                frames = { 1, 2, 3 },
+                interval = 0.2,
+                texture = 'bird',
+            },
+            ['grabbed-down'] = {
+                frames = { 1, 3 },
+                interval = 0.02,
+                texture = 'bird',
+            },
+            ['fall-down'] = {
+                frames = { 1, 3 },
+                interval = 0.2,
+                texture = 'bird',
+            },
+        },
+    },
+    --[[ ['greekCitizen'] = {
         species = 'greekCitizen',
         grabSound = 'oi',
         color = 'none',
@@ -117,13 +169,13 @@ CREATURE_DEFS = {
                 texture = 'greekCitizen',
             },
         },
-    },
+    }, ]]
     ['dog'] = {
         species = 'dog',
         grabSound = 'hey-sheep',
         color = 'none',
-        height = 32,
-        width = 27,
+        width = 32,
+        height = 27,
         walkSpeed = 25,
         texture = 'dog',
         animations = {
