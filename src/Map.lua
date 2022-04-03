@@ -44,8 +44,8 @@ function Map:generateCreatures()
         })
 
         self.creatures[i].stateMachine = StateMachine {
-            --['walk'] = function() return EntityWalkState(self.creatures[i]) end,
-            ['idle'] = function() return EntityIdleState(self.creatures[i]) end
+            ['walk'] = function() return CreatureWalkState(self.creatures[i]) end,
+            ['idle'] = function() return CreatureIdleState(self.creatures[i]) end
         }
 
         self.creatures[i]:changeState('idle')
@@ -131,7 +131,7 @@ function Map:render()
         object:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 
-    for k, entity in pairs(self.creatures) do
-        entity:render(self.adjacentOffsetX, self.adjacentOffsetY)
+    for k, creature in pairs(self.creatures) do
+        creature:render(self.adjacentOffsetX, self.adjacentOffsetY)
     end
 end
