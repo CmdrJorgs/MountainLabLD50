@@ -34,7 +34,7 @@ function Map:generateCreatures()
 end
 
 function Map:generateCreature()
-    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'greekCitizen'}
+    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'bird', 'goat'}
     local type = type_list[math.random(#type_list)]
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
