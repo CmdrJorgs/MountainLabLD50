@@ -1,8 +1,5 @@
 VolcanoExplodingState = Class{__includes = BaseState}
 
-local SCREEN_WIPE_TIME = 5
-local EXPLOSION_TIME = 6
-
 function VolcanoExplodingState:init(volcano)
     self.volcano = volcano
 end
@@ -13,7 +10,7 @@ end
 
 function VolcanoExplodingState:update(dt)
     self.current_time = self.current_time + dt
-    if self.current_time > EXPLOSION_TIME then
+    if self.current_time > EXPLOSION_ANIMATION_TOTAL_DURATION then
         self.volcano.state_machine:change('exploded')
     end
 end
@@ -31,8 +28,4 @@ function VolcanoExplodingState:render()
         self.volcano.width / 2,
         self.volcano.height / 2
     )
-
-    -- TODO: This should be a separate object in front of everything
-    love.graphics.setColor(1,0.7,0)
-    love.graphics.rectangle("fill",0,0,VIRTUAL_WIDTH,self.current_time / SCREEN_WIPE_TIME * VIRTUAL_HEIGHT)
 end
