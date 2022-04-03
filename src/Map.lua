@@ -68,65 +68,31 @@ end
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
 function Map:generateObjects()
-    local props = { 'house' }
+    local props = { 'house', 'tree3' }
     for i = 1, INIT_CREATURE_COUNT do
         local type = props[math.random(#props)]
 
         table.insert(self.objects, GameObject(
-                GAME_OBJECT_DEFS['house'],
-                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS['house'].width),
+                GAME_OBJECT_DEFS[type],
+                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS[type].width),
                 math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - GAME_OBJECT_DEFS[type].height)
         ))
 
     end
 end
 
---[[
-    Generates the walls and floors of the room, randomizing the various varieties
-    of said tiles for visual variety.
-]]
---function Map:generateWallsAndFloors()
---    for y = 1, self.height do
---        table.insert(self.tiles, {})
---
---        for x = 1, self.width do
---            local id = TILE_EMPTY
---
---            if x == 1 and y == 1 then
---                id = TILE_TOP_LEFT_CORNER
---            elseif x == 1 and y == self.height then
---                id = TILE_BOTTOM_LEFT_CORNER
---            elseif x == self.width and y == 1 then
---                id = TILE_TOP_RIGHT_CORNER
---            elseif x == self.width and y == self.height then
---                id = TILE_BOTTOM_RIGHT_CORNER
---
---            -- random left-hand walls, right walls, top, bottom, and floors
---            elseif x == 1 then
---                id = TILE_LEFT_WALLS[math.random(#TILE_LEFT_WALLS)]
---            elseif x == self.width then
---                id = TILE_RIGHT_WALLS[math.random(#TILE_RIGHT_WALLS)]
---            elseif y == 1 then
---                id = TILE_TOP_WALLS[math.random(#TILE_TOP_WALLS)]
---            elseif y == self.height then
---                id = TILE_BOTTOM_WALLS[math.random(#TILE_BOTTOM_WALLS)]
---            else
---                id = TILE_FLOORS[math.random(#TILE_FLOORS)]
---            end
---
---            table.insert(self.tiles[y], {
---                id = id
---            })
---        end
---    end
---end
-
 function Map:update(dt)
-    -- self.cursor:update(dt)
-
     filter_in_place(self.creatures, function(c) return not c.dead end)
     filter_in_place(self.objects, function(o) return not o.dead end)
-    
+
+    self.current_time = (self.current_time or 0) + dt
+    if self.current_time > RESPAWN_TIME then
+        self.current_time = 0
+        if math.random() > .75 then
+            self:generateCreature()
+        end
+    end
+
     for i = 1, #self.creatures, 1 do
         local creatureA = self.creatures[i]
         for j = i, #self.objects, 1 do

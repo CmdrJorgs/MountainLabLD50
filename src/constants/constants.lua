@@ -23,7 +23,8 @@ GROUND_HEIGHT = 150 -- from the top of the screen
 --- creature generation constants
 ---
 
-INIT_CREATURE_COUNT = 20
+INIT_CREATURE_COUNT = 30
+RESPAWN_TIME = 5 -- how many seconds must elapse before respawn happens (25% chance)
 CREATURE_SICKLY_CHANCE = 0.1
 
 ---
