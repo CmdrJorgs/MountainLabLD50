@@ -112,9 +112,24 @@ end
 function Map:update(dt)
     -- self.cursor:update(dt)
 
-    for k, creature in pairs(self.creatures) do
-        creature:processAI({}, dt)
-        creature:update(dt)
+    for i = 1, #self.creatures, 1 do
+        local creatureA = self.creatures[i]
+        for j = i, #self.objects, 1 do
+            local objectB = self.objects[j]
+            if creatureA:collides(objectB) then
+                creatureA:handleCollision()
+            end
+        end
+        for j = i, #self.creatures, 1 do
+            local creatureB = self.creatures[j]
+            if creatureA:collides(creatureB) then
+                creatureA:handleCollision()
+                creatureB:handleCollision()
+            end
+        end
+
+        creatureA:processAI({}, dt)
+        creatureA:update(dt)
     end
 
     for k, object in pairs(self.objects) do
