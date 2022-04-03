@@ -2,11 +2,12 @@ Creature = Class{}
 
 function generateHey(type)
     local soundsList = { 'angrylilhey', 'deephey', 'madhey', 'hey-sheep' }
-    if species == 'blueTogaHuman' then
-        table.insert(soundsList, 'oi')
-    end
-    if species == 'sheep' then
+    if type == 'blueTogaHuman' then
+        return 'oi'
+    elseif type == 'sheep' then
         return 'hey-sheep'
+    elseif type == 'whiteTogaHuman' then
+        return 'deephey'
     end
     return soundsList[math.random(#soundsList)]
 end

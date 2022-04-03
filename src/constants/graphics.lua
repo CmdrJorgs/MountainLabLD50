@@ -3,7 +3,8 @@
 gTextures = {
     ['badge'] = love.graphics.newImage('graphics/branding/badge.png'),
     ['bull'] = love.graphics.newImage('graphics/creatures/cow180x126.png'),
-    ['blueTogaHuman'] = love.graphics.newImage('graphics/creatures/greek_citizen25x25.png'),
+    ['blueTogaHuman'] = love.graphics.newImage('graphics/creatures/blue_toga_human.png'),
+    ['whiteTogaHuman'] = love.graphics.newImage('graphics/creatures/white_toga_human46x22.png'),
     ['cursor'] = love.graphics.newImage('graphics/cursor/cursor16x16.png'),
     ['sheep'] = love.graphics.newImage('graphics/creatures/sheep20x50.png'),
     ['house'] = love.graphics.newImage('graphics/map/house32x32.png'),
@@ -15,6 +16,7 @@ gTextures = {
 gFrames = {
     --['bull'] = GenerateQuads(gTextures['bull'], CREATURE_DEFS['bull'].width, CREATURE_DEFS['bull'].height)
     ['blueTogaHuman'] = GenerateQuads(gTextures['blueTogaHuman'], CREATURE_DEFS['blueTogaHuman'].width, CREATURE_DEFS['blueTogaHuman'].height),
+    ['whiteTogaHuman'] = GenerateQuads(gTextures['whiteTogaHuman'], CREATURE_DEFS['whiteTogaHuman'].width, CREATURE_DEFS['whiteTogaHuman'].height),
     ['cursor'] = GenerateQuads(gTextures['cursor'], 16, 16),
     ['sheep'] = GenerateQuads(gTextures['sheep'], CREATURE_DEFS['sheep'].width, CREATURE_DEFS['sheep'].height),
     ['house'] = GenerateQuads(gTextures['house'], GAME_OBJECT_DEFS['house'].width, GAME_OBJECT_DEFS['house'].height),
