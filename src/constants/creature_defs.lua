@@ -27,6 +27,16 @@ CREATURE_DEFS = {
                 interval = 0.2,
                 texture = 'sheep',
             },
+            ['grabbed-down'] = {
+                frames = { 1, 2 },
+                interval = 0.02,
+                texture = 'sheep',
+            },
+            ['fall-down'] = {
+                frames = { 1, 2 },
+                interval = 0.2,
+                texture = 'sheep',
+            },
         },
     },
     ['blueTogaHuman'] = {
@@ -38,6 +48,16 @@ CREATURE_DEFS = {
         texture = 'blueTogaHuman',
         animations = {
             ['idle-down'] = {
+                frames = { 1 },
+                interval = 0.2,
+                texture = 'blueTogaHuman',
+            },
+            ['grabbed-down'] = {
+                frames = { 1 },
+                interval = 0.02,
+                texture = 'blueTogaHuman',
+            },
+            ['fall-down'] = {
                 frames = { 1 },
                 interval = 0.2,
                 texture = 'blueTogaHuman',

@@ -68,6 +68,17 @@ function Creature:changeAnimation(name)
     self.currentAnimation = self.animations[name]
 end
 
+function Creature:enter_grab()
+    self.stateMachine:change('grabbed')
+end
+
+function Creature:exit_grab(params)
+    self.stateMachine:change('falling', {
+        dx = params.dx,
+        dy = params.dy
+    })
+end
+
 function Creature:update(dt)
     self.stateMachine:update(dt)
 
