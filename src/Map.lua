@@ -40,8 +40,8 @@ function Map:generateCreatures()
             walkSpeed = CREATURE_DEFS[type].walkSpeed or 20,
             x = math.random(0, VIRTUAL_WIDTH),
             y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT),
-            width = CREATURE_DEFS[type].imageWidth,
-            height =  CREATURE_DEFS[type].imageHeight,
+            width = CREATURE_DEFS[type].width,
+            height =  CREATURE_DEFS[type].height,
         })
 
         self.creatures[i].stateMachine = StateMachine {
