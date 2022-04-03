@@ -109,6 +109,7 @@ function Cursor:get_best_overlapping_creature()
 end
 
 function Cursor:render()
+    love.graphics.setColor(1,1,1,1)
     -- TODO: Don't hardcode the cursor values
     local frameIndex = (self.attempting_grab and 2) or 1
     love.graphics.draw(gTextures['cursor'], gFrames['cursor'][frameIndex], self.x - 8, self.y - 8)
