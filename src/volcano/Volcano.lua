@@ -15,13 +15,6 @@ local ExplodingState = require "src/volcano/states/ExplodingState"
 local ExplodedState = require "src/volcano/states/ExplodedState"
 
 -- local helper functions
-local function generate_explode_callback(state_machine)
-    return function()
-        state_machine:change("exploding", {
-            exploded_callback = function() state_machine:change("exploded", {}) end
-        })
-    end
-end
 
 --[[
     The volcano has three main states:
@@ -34,14 +27,14 @@ end
 function Volcano:init(params)
     self.width = 440
     self.height = 220
+    local volcano = self
     self.state_machine = StateMachine{
-        normal = function() return NormalState(self) end,
-        exploding = ExplodingState,
-        exploded = ExplodedState,
+        normal = function() return NormalState(volcano) end,
+        exploding = function() return ExplodingState(volcano) end,
+        exploded = function() return ExplodedState(volcano) end,
     }
     -- Enter the normal state, passing state change functions into the parameters
     self.state_machine:change("normal", { 
-        explode_callback = generate_explode_callback(self.state_machine),
         feedback_reporter = params.feedback_reporter,
     })
 end

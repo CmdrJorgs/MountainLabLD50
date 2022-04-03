@@ -1,5 +1,9 @@
 local ExplodedState = Class{__includes = BaseState}
 
+function ExplodedState:init(volcano)
+    self.volcano = volcano
+end
+
 function ExplodedState:is_exploded()
     return true
 end

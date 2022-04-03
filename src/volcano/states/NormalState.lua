@@ -70,11 +70,6 @@ function NormalState:enter(enterParams)
     self.time_of_last_craving = 0
     self.time_of_last_craving_roll = 0
 
-    -- enter params contains an explode callback
-    self.explode_callback = enterParams.explode_callback
-    if self.explode_callback == nil then
-        error("Did not receive an explode callback")
-    end
     self.feedback_reporter = enterParams.feedback_reporter or {
         report_satisfied = function() end,
         report_non_matching_offering = function() end,
@@ -98,7 +93,7 @@ function NormalState:update(dt)
     local anger_rate = calculate_anger_rate(self) * dt
     self.anger = math.max(self.anger + anger_rate, 0)
     if self.anger > MAX_ANGER then
-        self.explode_callback()
+        self.volcano.state_machine:change('exploding')
     end
 end
 
@@ -178,20 +173,20 @@ function NormalState:render()
         VOLCANO_STAGE = 5
     end
     --love.graphics.draw(gTextures['volcano'], gFrames['volcano'][1], VIRTUAL_WIDTH / 2, 0, 0, 1, 1, gTextures['volcano']:getWidth/2, gTextures['volcano']:getHeight/2)
+    love.graphics.setColor(1,1,1,1)
     love.graphics.draw(
-            gTextures['volcano'],
-            gFrames['volcano'][VOLCANO_STAGE],
-            VIRTUAL_WIDTH / 2,
-            GROUND_HEIGHT - (self.volcano.height / 2) + 20,
-            0,
-            1,
-            1,
-            self.volcano.width / 2,
-            self.volcano.height / 2
+        gTextures['volcano'],
+        gFrames['volcano'][VOLCANO_STAGE],
+        VIRTUAL_WIDTH / 2,
+        GROUND_HEIGHT - (self.volcano.height / 2) + 20,
+        0,
+        1,
+        1,
+        self.volcano.width / 2,
+        self.volcano.height / 2
     )
 
     -- TODO: Definitely decide where this should go
-    love.graphics.setColor(1,1,1,1)
     love.graphics.setFont(gFonts['small'])
     love.graphics.print("Anger Level: "..self.anger, 10, 10)
     for k,v in ipairs(self.cravings) do
