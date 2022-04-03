@@ -26,7 +26,6 @@ end
 
 function Creature:createAnimations(animations)
     local animationsReturned = {}
-
     for k, animationDef in pairs(animations) do
         animationsReturned[k] = Animation {
             texture = animationDef.texture,
@@ -55,7 +54,6 @@ function Creature:changeAnimation(name)
 end
 
 function Creature:update(dt)
-
     self.stateMachine:update(dt)
 
     if self.currentAnimation then

@@ -9,7 +9,7 @@ CREATURE_DEFS = {
         animations = {
             ['idle-down'] = {
                 frames = { 1, 2, 3, 4, 5 },
-                interval = 1,
+                interval = 0.2,
                 texture = 'bull',
             },
         },

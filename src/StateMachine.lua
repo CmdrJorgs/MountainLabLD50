@@ -1,5 +1,6 @@
 StateMachine = Class{}
 
+-- for calculations only. not for animation --
 function StateMachine:init(states)
 	self.empty = {
 		render = function() end,
