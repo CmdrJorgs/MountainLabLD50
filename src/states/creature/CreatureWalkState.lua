@@ -76,7 +76,7 @@ function CreatureWalkState:processAI(params, dt)
         if math.random(3) == 1 then
             self.creature:changeState('idle')
         else
-            self.moveDuration = math.random(5)
+            self.moveDuration = math.random(10)
             self.creature.direction = directions[math.random(#directions)]
             --self.creature:changeAnimation('walk-' .. tostring(self.creature.direction))
         end

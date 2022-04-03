@@ -60,8 +60,8 @@ function PlayState:processAI(params, dt)
 end
 
 function PlayState:render()
-    love.graphics.clear(0.4, 0.4, 0.5)
-    self.map:render()
+    love.graphics.clear(0, 198/255, 266/255)
     self.volcano:render()
+    self.map:render()
     self.cursor:render()
 end

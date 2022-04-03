@@ -7,7 +7,7 @@ gTextures = {
     ['cursor'] = love.graphics.newImage('graphics/cursor/cursor16x16.png'),
     ['sheep'] = love.graphics.newImage('graphics/creatures/sheep20x50.png'),
     ['house'] = love.graphics.newImage('graphics/map/house32x32.png'),
-    --['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
+    ['volcano'] = love.graphics.newImage('graphics/map/volcano440x220.png'),
     --['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
     --['character-pot-walk'] = love.graphics.newImage('graphics/character_pot_walk.png'),
 }
@@ -18,6 +18,7 @@ gFrames = {
     ['cursor'] = GenerateQuads(gTextures['cursor'], 16, 16),
     ['sheep'] = GenerateQuads(gTextures['sheep'], CREATURE_DEFS['sheep'].width, CREATURE_DEFS['sheep'].height),
     ['house'] = GenerateQuads(gTextures['house'], GAME_OBJECT_DEFS['house'].width, GAME_OBJECT_DEFS['house'].height),
+    ['volcano'] = GenerateQuads(gTextures['volcano'], 440, 200)
     --['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
     --['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     --['character-pot-walk'] = GenerateQuads(gTextures['character-pot-walk'], 16, 32),

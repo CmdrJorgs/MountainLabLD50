@@ -151,7 +151,6 @@ function Map:update(dt)
 end
 
 function Map:render()
-    love.graphics.clear(0, 198/255, 266/255)
     love.graphics.setColor(204/255, 192/255, 0, 1)
     love.graphics.rectangle("fill", 0, GROUND_HEIGHT, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 

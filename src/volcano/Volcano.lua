@@ -32,8 +32,10 @@ end
 ]]
 
 function Volcano:init(params)
+    self.width = 440
+    self.height = 220
     self.state_machine = StateMachine{
-        normal = NormalState,
+        normal = function() return NormalState(self) end,
         exploding = ExplodingState,
         exploded = ExplodedState,
     }
