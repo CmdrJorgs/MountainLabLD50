@@ -50,8 +50,7 @@ function CreatureWalkState:update(dt)
     elseif self.creature.direction == 'down' then
         self.creature.y = self.creature.y + walkSpeed * dt
 
-        local bottomEdge = VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * self.creature.height)
-            + 0 - self.creature.height
+        local bottomEdge = VIRTUAL_HEIGHT - self.creature.height
 
         if self.creature.y + self.creature.height >= bottomEdge then
             self.creature.y = bottomEdge - self.creature.height
