@@ -19,8 +19,8 @@ require 'src/Map'
 
 require 'src/states/BaseState'
 --
-require 'src/states/entity/EntityIdleState'
---require 'src/states/entity/EntityWalkState'
+require 'src/states/creature/CreatureIdleState'
+require 'src/states/creature/CreatureWalkState'
 --
 --require 'src/states/entity/projectile/ProjectileExplodeState'
 --require 'src/states/entity/projectile/ProjectileMoveState'

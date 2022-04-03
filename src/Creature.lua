@@ -68,7 +68,7 @@ end
 
 function Creature:render(adjacentOffsetX, adjacentOffsetY)
     self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0)
-    self.stateMachine:render()
     love.graphics.setColor(1, 1, 1, 1)
+    self.stateMachine:render()
     self.x, self.y = self.x - (adjacentOffsetX or 0), self.y - (adjacentOffsetY or 0)
 end

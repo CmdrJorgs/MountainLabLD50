@@ -5,6 +5,6 @@ GAME_OBJECT_DEFS = {
         frame = 1,
         width = 32,
         height = 32,
-        solid = false, -- set to true to enable collision detection --
+        solid = true, -- set to true to enable collision detection --
     }
 }
