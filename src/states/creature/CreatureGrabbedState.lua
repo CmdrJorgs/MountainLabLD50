@@ -3,7 +3,7 @@ CreatureGrabbedState = Class{__includes = BaseState}
 function CreatureGrabbedState:init(entity)
     self.entity = entity
 
-    self.entity:changeAnimation('grabbed-' .. self.entity.direction)
+    self.entity:changeAnimation('grabbed-' .. 'down' )-- self.entity.direction)
 
     -- TODO: do some fun dangling animations
 end

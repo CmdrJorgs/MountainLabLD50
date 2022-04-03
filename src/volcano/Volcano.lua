@@ -64,7 +64,9 @@ end
 function Volcano:test_offering(offering)
     local current = self.state_machine.current
     if current.test_offering ~= nil then
-        current:test_offering(offering)
+        return current:test_offering(offering)
+    else
+        return false
     end
 end
 

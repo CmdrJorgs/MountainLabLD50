@@ -35,8 +35,8 @@ function Cursor:update(dt)
             end
         end
     else
-        self.grabbed_creature.x = self.x
-        self.grabbed_creature.y = self.y
+        self.grabbed_creature.x = self.x - self.grabbed_creature.width / 2
+        self.grabbed_creature.y = self.y - self.grabbed_creature.height / 2
         if not love.mouse.isDown(1) then
             self.grabbed_creature:exit_grab({
                 dx = self.dx,
@@ -51,8 +51,8 @@ function Cursor:get_best_overlapping_creature()
     -- Figure out all of the creatures the cursor is currently touching
     local grabbed_creatures = {}
     for i, creature in ipairs(self.map.creatures) do
-        local adjusted_width = creature.width - CURSOR_GRAB_RANGE * 2
-        local adjusted_height = creature.height - CURSOR_GRAB_RANGE * 2
+        local adjusted_width = creature.width + CURSOR_GRAB_RANGE * 2
+        local adjusted_height = creature.height + CURSOR_GRAB_RANGE * 2
         local adjusted_x = creature.x - CURSOR_GRAB_RANGE
         local adjusted_y = creature.y - CURSOR_GRAB_RANGE
         if (self.x > adjusted_x) and (self.x < adjusted_x + adjusted_width)
@@ -61,7 +61,8 @@ function Cursor:get_best_overlapping_creature()
             table.insert(grabbed_creatures, creature)
         end
     end
-    if table.getn(grabbed_creatures) == 0 then
+    print("Clicked at "..self.x..", "..self.y.." and found "..(#grabbed_creatures).." creatures")
+    if #grabbed_creatures == 0 then
         return nil
     end
     -- If we're grabbing multiple creatures, be kinda nice to the player by
@@ -75,9 +76,21 @@ function Cursor:get_best_overlapping_creature()
             table.insert(craved_creatures, creature)
         end
     end
-    -- Finally, pick one of the remaining creatures at random
-    local eligible_creatures = (table.getn(craved_creatures) > 0 and craved_creatures) or grabbed_creatures
-    return eligible_creatures[math.random(table.getn(eligible_creatures))]
+    print("Of "..(#grabbed_creatures).." creatures, "..(#craved_creatures).." are craved")
+    -- Finally, pick the eligible creature whose center is closest to the cursor
+    local eligible_creatures = (#craved_creatures > 0 and craved_creatures) or grabbed_creatures
+    local closest_creature = eligible_creatures[1]
+    local closest_creature_distance_squared = VIRTUAL_WIDTH * VIRTUAL_WIDTH + VIRTUAL_HEIGHT * VIRTUAL_HEIGHT
+    for i, creature in ipairs(eligible_creatures) do
+        local dx = creature.x + creature.width / 2 - self.x
+        local dy = creature.y + creature.height / 2 - self.y
+        local distance_squared = dx * dx + dy * dy
+        if distance_squared < closest_creature_distance_squared then
+            closest_creature_distance_squared = distance_squared
+            closest_creature = creature
+        end
+    end
+    return closest_creature
 end
 
 function Cursor:render()

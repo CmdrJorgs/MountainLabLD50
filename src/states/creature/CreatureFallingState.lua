@@ -3,7 +3,7 @@ CreatureFallingState = Class{__includes = BaseState}
 function CreatureFallingState:init(entity)
     self.entity = entity
 
-    self.entity:changeAnimation('fall-' .. self.entity.direction)
+    self.entity:changeAnimation('fall-' .. 'down' )-- self.entity.direction)
 end
 
 function CreatureFallingState:enter(enterParams)
