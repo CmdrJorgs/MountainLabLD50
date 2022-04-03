@@ -34,7 +34,7 @@ function Map:generateCreatures()
 end
 
 function Map:generateCreature()
-    local type_list = {'blueTogaHuman', 'sheep'}
+    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep'}
     local type = type_list[math.random(#type_list)]
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
@@ -49,6 +49,7 @@ function Map:generateCreature()
         width = CREATURE_DEFS[type].width,
         height =  CREATURE_DEFS[type].height,
         isSickly = (math.random() < CREATURE_SICKLY_CHANCE),
+        grabSound = CREATURE_DEFS[type].grabSound,
     }
 
     table.insert(self.creatures, creature)

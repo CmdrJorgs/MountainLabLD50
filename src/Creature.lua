@@ -1,20 +1,10 @@
 Creature = Class{}
 
-function generateHey(species)
-    local soundsList = { 'angrylilhey', 'deephey', 'madhey', 'hey-sheep' }
-    if species == 'blueTogaHuman' then
-        table.insert(soundsList, 'oi')
-    end
-    if species == 'sheep' then
-        return 'hey-sheep'
-    end
-    return soundsList[math.random(#soundsList)]
-end
-
 function Creature:init(def)
 
     -- in top-down games, there are four directions instead of two
     self.direction = 'down'
+    self.type = def.type
 
     self.animations = self:createAnimations(def.animations)
 
@@ -37,7 +27,7 @@ function Creature:init(def)
     self.color = def.color
     self.isSickly = def.isSickly or false
 
-    self.hey = generateHey(def.species)
+    self.hey = def.grabSound
 
     self.dead = false
 end
