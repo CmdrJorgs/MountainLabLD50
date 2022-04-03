@@ -39,6 +39,7 @@ function Map:generateCreature()
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
     local creature = Creature {
+        type = type,
         species = CREATURE_DEFS[type].species,
         color = CREATURE_DEFS[type].color,
         animations = CREATURE_DEFS[type].animations,

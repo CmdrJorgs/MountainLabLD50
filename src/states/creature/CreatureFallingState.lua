@@ -20,6 +20,9 @@ function CreatureFallingState:update(dt)
     --       they should fall some regardless of where they are dropped.
     --       For now, though, only drop if above ground height
     if self.creature.y > GROUND_HEIGHT then
+        if self.dy > 80 then
+            gSounds['oof']:play()
+        end
         self.creature:changeState('idle')
         return
     end
