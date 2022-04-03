@@ -49,6 +49,7 @@ function Map:generateCreature()
         width = CREATURE_DEFS[type].width,
         height =  CREATURE_DEFS[type].height,
         isSickly = (math.random() < CREATURE_SICKLY_CHANCE),
+        grabSound = CREATURE_DEFS[type].grabSound,
     }
 
     table.insert(self.creatures, creature)
