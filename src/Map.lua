@@ -13,7 +13,7 @@ function Map:init()
 
     -- game objects in the room
     self.objects = {}
-    --self:generateObjects()
+    self:generateObjects()
 
     -- used for centering the dungeon rendering
     --self.renderOffsetX = MAP_RENDER_OFFSET_X
@@ -28,12 +28,11 @@ end
     Randomly creates an assortment of enemies for the player to fight.
 ]]
 function Map:generateCreatures()
-    local species = {'bull', 'goat', 'lamb', 'dog', 'bird', 'wheat', 'wine', 'purple toga human', 'pants barbarian', 'white toga human', 'blue tunic human', 'egyptian hat human'}
+    local species = {'blueTogaHuman', 'sheep'}
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
     for i = 1, INIT_CREATURE_COUNT do
-        --local type = species[math.random(#species)]
-        local type = 'bull'
+        local type = species[math.random(#species)]
 
         table.insert(self.creatures, Creature {
             animations = CREATURE_DEFS[type].animations,
@@ -56,36 +55,19 @@ end
 --[[
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
---function Map:generateObjects()
---    table.insert(self.objects, GameObject(
---        GAME_OBJECT_DEFS['switch'],
---        math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
---                    VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
---        math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
---                    VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
---    ))
---
---    -- get a reference to the switch
---    local switch = self.objects[1]
---
---    -- define a function for the switch that will open all doors in the room
---    switch.onCollide = function()
---        if switch.state == 'unpressed' then
---            switch.state = 'pressed'
---
---            -- open every door in the room if we press the switch
---            for k, doorway in pairs(self.doorways) do
---                doorway.open = true
---            end
---
---            gSounds['door']:play()
---        end
---    end
---
---    for x = 1, math.random(MIN_POTS, MAX_POTS) do
---        addPot(self.objects)
---    end
---end
+function Map:generateObjects()
+    local props = { 'house' }
+    for i = 1, INIT_CREATURE_COUNT do
+        local type = props[math.random(#props)]
+
+        table.insert(self.objects, GameObject(
+                GAME_OBJECT_DEFS['house'],
+                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS['house'].width),
+                math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - GAME_OBJECT_DEFS[type].height)
+        ))
+
+    end
+end
 
 --[[
     Generates the walls and floors of the room, randomizing the various varieties
@@ -146,9 +128,9 @@ function Map:render()
     love.graphics.setColor(204/255, 192/255, 0, 1)
     love.graphics.rectangle("fill", 0, GROUND_HEIGHT, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    --for k, object in pairs(self.objects) do
-    --    object:render(self.adjacentOffsetX, self.adjacentOffsetY)
-    --end
+    for k, object in pairs(self.objects) do
+        object:render(self.adjacentOffsetX, self.adjacentOffsetY)
+    end
 
     for k, entity in pairs(self.creatures) do
         entity:render(self.adjacentOffsetX, self.adjacentOffsetY)
