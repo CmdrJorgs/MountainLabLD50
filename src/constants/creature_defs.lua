@@ -170,6 +170,32 @@ CREATURE_DEFS = {
             },
         },
     }, ]]
+    ['dog'] = {
+        species = 'dog',
+        grabSound = 'hey-sheep',
+        color = 'none',
+        width = 32,
+        height = 27,
+        walkSpeed = 25,
+        texture = 'dog',
+        animations = {
+            ['idle-down'] = {
+                frames = { 1, 2, 3, 2 },
+                interval = 0.2,
+                texture = 'dog',
+            },
+            ['grabbed-down'] = {
+                frames = { 1, 2 },
+                interval = 0.02,
+                texture = 'dog',
+            },
+            ['fall-down'] = {
+                frames = { 1, 2, 3 },
+                interval = 0.2,
+                texture = 'dog',
+            },
+        },
+    },
 }
 --'goat', 'lamb', 'dog', 'bird', 'wheat', 'wine', 'purple toga human', 'pants barbarian', 'white toga human', 'blue tunic human', 'egyptian hat human'
 
