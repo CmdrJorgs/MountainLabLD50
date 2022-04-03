@@ -13,7 +13,11 @@ function PlayState:init()
 end
 
 function PlayState:enter(params)
+    love.mouse.setVisible(false)
+end
 
+function PlayState:exit()
+    love.mouse.setVisible(true)
 end
 
 function PlayState:generateVolcanoFeedbackReporter()
