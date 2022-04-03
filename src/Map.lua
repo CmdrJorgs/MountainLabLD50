@@ -124,7 +124,8 @@ function Map:update(dt)
     -- self.cursor:update(dt)
 
     filter_in_place(self.creatures, function(c) return not c.dead end)
-
+    filter_in_place(self.objects, function(o) return not o.dead end)
+    
     for i = 1, #self.creatures, 1 do
         local creatureA = self.creatures[i]
         for j = i, #self.objects, 1 do

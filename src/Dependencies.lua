@@ -18,6 +18,10 @@ require 'src/Game'
 require 'src/Map'
 require 'src/Cursor'
 
+require 'src/decorations/BaseDecoration'
+require 'src/decorations/TextSpeechBubble'
+require 'src/decorations/VolcanoScreenWipe'
+
 require 'src/states/BaseState'
 --
 require 'src/states/creature/CreatureIdleState'

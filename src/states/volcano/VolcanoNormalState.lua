@@ -74,6 +74,7 @@ function VolcanoNormalState:enter(enterParams)
         report_satisfied = function() end,
         report_non_matching_offering = function() end,
         report_defective_offering = function() end,
+        report_exploding = function() end,
     }
 end
 
@@ -94,6 +95,7 @@ function VolcanoNormalState:update(dt)
     self.anger = math.max(self.anger + anger_rate, 0)
     if self.anger > MAX_ANGER then
         self.volcano.state_machine:change('exploding')
+        self.feedback_reporter:report_exploding()
     end
 end
 

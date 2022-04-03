@@ -10,6 +10,8 @@ function PlayState:init()
         volcano = self.volcano,
         map = self.map,
     }
+    -- decorations over the room
+    self.decorations = {}
 end
 
 function PlayState:enter(params)
@@ -23,19 +25,30 @@ end
 function PlayState:generateVolcanoFeedbackReporter()
     -- TODO: Make these functions actually do something
     local s = self
+    local function generate_speech_bubble(text)
+        table.insert(s.decorations, TextSpeechBubble{
+            text = text,
+            x = VIRTUAL_WIDTH * 2 / 3,
+            y = GROUND_HEIGHT / 2,
+            fontName = 'small',
+        })
+    end
     return {
         -- Called when the volcano is satisfied with its offerings
         report_satisfied = function(craving, offering)
-            print("Volcano satisfied a craving with this offering")
+            generate_speech_bubble('That was finger-lickin good')
         end,
         -- Called when the volcano is given something it did not want
         report_non_matching_offering = function(offering)
-            print("Volcano given something it did not want")
+            generate_speech_bubble('That was not what I wanted')
         end,
         -- Called when the volcano is given something undesirable,
         -- such as a sick animal
         report_defective_offering = function(offering)
-            print("Volcano given something defective")
+            generate_speech_bubble('That was gross, man')
+        end,
+        report_exploding = function()
+            table.insert(s.decorations, VolcanoScreenWipe{})
         end
     }
 end
@@ -45,14 +58,19 @@ function PlayState:update(dt)
         gStateMachine:change('start')
     end
 
-    self.map:update(dt)
-
     self.volcano:update(dt)
     if self.volcano:is_exploded() then
         gStateMachine:change("gameOver")
     end
 
+    self.map:update(dt)
+
     self.cursor:update(dt)
+
+    filter_in_place(self.decorations, function(d) return not d.dead end)
+    for k, decoration in pairs(self.decorations) do
+        decoration:update(dt)
+    end
 end
 
 function PlayState:processAI(params, dt)
@@ -64,4 +82,7 @@ function PlayState:render()
     self.volcano:render()
     self.map:render()
     self.cursor:render()
+    for k, decoration in pairs(self.decorations) do
+        decoration:render()
+    end
 end

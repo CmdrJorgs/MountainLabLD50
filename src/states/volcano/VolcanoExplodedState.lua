@@ -9,7 +9,6 @@ function VolcanoExplodedState:is_exploded()
 end
 
 function VolcanoExplodedState:render()
-    -- TODO: This should be a separate object in front of everything
-    love.graphics.setColor(1,0.7,0)
-    love.graphics.rectangle("fill",0,0,VIRTUAL_WIDTH,VIRTUAL_HEIGHT)
+    -- not rendering anything because the game should be over
+    -- and the screen should be completely covered in lava
 end
