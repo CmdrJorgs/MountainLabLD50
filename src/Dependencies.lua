@@ -12,6 +12,7 @@ require 'src/constants/constants'
 
 require 'src/Animation'
 require 'src/Creature'
+require 'src/GameObject'
 require 'src/StateMachine'
 require 'src/Game'
 require 'src/Map'

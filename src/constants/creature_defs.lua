@@ -1,29 +1,46 @@
 CREATURE_DEFS = {
-    ['bull'] = {
-        species = 'bull',
+    --['bull'] = {
+    --    species = 'bull',
+    --    color = 'none',
+    --    height = 126,
+    --    width = 180,
+    --    walkSpeed = 1,
+    --    texture = 'bull',
+    --    animations = {
+    --        ['idle-down'] = {
+    --            frames = { 1, 2, 3, 4, 5 },
+    --            interval = 0.2,
+    --            texture = 'bull',
+    --        },
+    --    },
+    --},
+    ['sheep'] = {
+        species = 'sheep',
         color = 'none',
-        height = 126,
-        width = 180,
+        height = 20,
+        width = 25,
         walkSpeed = 1,
-        texture = 'bull',
+        texture = 'sheep',
         animations = {
             ['idle-down'] = {
-                frames = { 1, 2, 3, 4, 5 },
+                frames = { 1, 2 },
                 interval = 0.2,
-                texture = 'bull',
+                texture = 'sheep',
             },
         },
     },
-    ['goat'] = {
-        species = 'goat',
-        color = 'none',
-        texture = 'goat',
-        height = 192,
-        width = 192,
+    ['blueTogaHuman'] = {
+        species = 'blueTogaHuman',
+        color = 'blue',
+        height = 25,
+        width = 25,
+        walkSpeed = 1,
+        texture = 'blueTogaHuman',
         animations = {
             ['idle-down'] = {
-                frames = { 70, 71, 72, 71 },
-                interval = 0.2
+                frames = { 1 },
+                interval = 0.2,
+                texture = 'blueTogaHuman',
             },
         },
     },
