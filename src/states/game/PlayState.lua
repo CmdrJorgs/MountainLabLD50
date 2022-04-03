@@ -61,9 +61,7 @@ end
 
 function PlayState:render()
     love.graphics.clear(0.4, 0.4, 0.5)
-    love.graphics.push()
     self.map:render()
     self.volcano:render(dt)
-    love.graphics.pop()
     --self.cursor.render()
 end
