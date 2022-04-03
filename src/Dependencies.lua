@@ -15,10 +15,13 @@ require 'src/Creature'
 require 'src/StateMachine'
 require 'src/Game'
 require 'src/Map'
+require 'src/Cursor'
 
 require 'src/states/BaseState'
 --
 require 'src/states/entity/EntityIdleState'
+require 'src/states/entity/EntityGrabbedState'
+require 'src/states/entity/EntityFallingState'
 --require 'src/states/entity/EntityWalkState'
 --
 --require 'src/states/entity/projectile/ProjectileExplodeState'

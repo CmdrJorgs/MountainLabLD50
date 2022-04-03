@@ -61,6 +61,13 @@ function Volcano:processAI(params, dt)
     self.state_machine:processAI(params, dt)
 end
 
+function Volcano:test_offering(offering)
+    local current = self.state_machine.current
+    if current.test_offering ~= nil then
+        current:test_offering(offering)
+    end
+end
+
 function Volcano:accept_offering(offering)
     local current = self.state_machine.current
     if current.accept_offering ~= nil then

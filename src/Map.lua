@@ -45,8 +45,9 @@ function Map:generateCreatures()
         })
 
         self.creatures[i].stateMachine = StateMachine {
-            --['walk'] = function() return EntityWalkState(self.creatures[i]) end,
-            ['idle'] = function() return EntityIdleState(self.creatures[i]) end
+            ['idle'] = function() return EntityIdleState(self.creatures[i]) end,
+            ['grabbed'] = function() return EntityGrabbedState(self.creatures[i]) end,
+            ['falling'] = function() return EntityFallingState(self.creatures[i]) end,
         }
 
         self.creatures[i]:changeState('idle')

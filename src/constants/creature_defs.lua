@@ -12,6 +12,16 @@ CREATURE_DEFS = {
                 interval = 0.2,
                 texture = 'bull',
             },
+            ['grabbed-down'] = {
+                frames = { 1, 2, 3, 4, 5 },
+                interval = 0.1,
+                texture = 'bull',
+            },
+            ['fall-down'] = {
+                frames = { 1, 2, 3, 4, 5 },
+                interval = 0.2,
+                texture = 'bull',
+            },
         },
     },
     ['goat'] = {
@@ -22,6 +32,14 @@ CREATURE_DEFS = {
         width = 192,
         animations = {
             ['idle-down'] = {
+                frames = { 70, 71, 72, 71 },
+                interval = 0.2
+            },
+            ['grabbed-down'] = {
+                frames = { 70, 71, 72, 71 },
+                interval = 0.1
+            },
+            ['fall-down'] = {
                 frames = { 70, 71, 72, 71 },
                 interval = 0.2
             },

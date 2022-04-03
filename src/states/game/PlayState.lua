@@ -6,7 +6,10 @@ function PlayState:init()
         feedback_reporter = self:generateVolcanoFeedbackReporter()
     }
     self.map = Map {}
-    --self.cursor = 'cursor'
+    self.cursor = Cursor {
+        volcano = self.volcano,
+        map = self.map,
+    }
 end
 
 function PlayState:enter(params)
@@ -34,10 +37,12 @@ function PlayState:generateVolcanoFeedbackReporter()
 end
 
 function PlayState:update(dt)
-    self.map:update(dt)
     if love.keyboard.wasPressed('escape') then
         gStateMachine:change('start')
     end
+
+    self.map:update(dt)
+
     -- Test code for feeding offerings to the volcano
     if love.keyboard.wasPressed('z') then
         self.volcano:accept_offering({
@@ -53,6 +58,8 @@ function PlayState:update(dt)
     if self.volcano:is_exploded() then
         gStateMachine:change("gameOver")
     end
+
+    self.cursor:update(dt)
 end
 
 function PlayState:processAI(params, dt)
@@ -62,6 +69,6 @@ end
 function PlayState:render()
     love.graphics.clear(0.4, 0.4, 0.5)
     self.map:render()
-    self.volcano:render(dt)
-    --self.cursor.render()
+    self.volcano:render()
+    self.cursor:render()
 end
