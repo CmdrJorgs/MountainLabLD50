@@ -1,9 +1,22 @@
 Creature = Class{}
 
+function generateHey(type)
+    local soundsList = { 'angrylilhey', 'deephey', 'madhey', 'hey-sheep' }
+    if type == 'blueTogaHuman' then
+        table.insert(soundsList, 'oi')
+    end
+    if type == 'sheep' then
+        return 'hey-sheep'
+    end
+    return soundsList[math.random(#soundsList)]
+end
+
 function Creature:init(def)
 
     -- in top-down games, there are four directions instead of two
     self.direction = 'down'
+    self.type = def.type
+    self.hey = generateHey(def.type)
 
     self.animations = self:createAnimations(def.animations)
 
@@ -70,6 +83,7 @@ end
 
 function Creature:enter_grab()
     self.stateMachine:change('grabbed')
+    gSounds[self.hey]:play()
 end
 
 function Creature:exit_grab(params)

@@ -41,6 +41,7 @@ function Map:generateCreatures()
             y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - CREATURE_DEFS[type].height),
             width = CREATURE_DEFS[type].width,
             height =  CREATURE_DEFS[type].height,
+            type = type,
         })
 
         self.creatures[i].stateMachine = StateMachine {
