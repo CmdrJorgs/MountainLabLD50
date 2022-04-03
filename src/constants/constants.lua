@@ -1,4 +1,5 @@
 require 'src/constants/creature_defs'
+require 'src/constants/game_objects'
 require 'src/constants/text'
 require 'src/constants/graphics'
 

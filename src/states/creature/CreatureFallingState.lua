@@ -1,19 +1,19 @@
-EntityFallingState = Class{__includes = BaseState}
+CreatureFallingState = Class{__includes = BaseState}
 
-function EntityFallingState:init(entity)
+function CreatureFallingState:init(entity)
     self.entity = entity
 
     self.entity:changeAnimation('fall-' .. self.entity.direction)
 end
 
-function EntityFallingState:enter(enterParams)
+function CreatureFallingState:enter(enterParams)
     -- TODO: keep any inertia from earlier
     self.dx = 0
     self.dy = 0
 end
 
-function EntityFallingState:update(dt)
-    -- TODO: If the entity has been picked up and moved around a bit,
+function CreatureFallingState:update(dt)
+    -- TODO: If the creature has been picked up and moved around a bit,
     --       they should fall some regardless of where they are dropped.
     --       For now, though, only drop if above ground height
     if self.entity.y > GROUND_HEIGHT then
@@ -26,11 +26,11 @@ function EntityFallingState:update(dt)
     self.entity.y = self.entity.y + self.dy * dt
 end
 
-function EntityFallingState:processAI(params, dt)
+function CreatureFallingState:processAI(params, dt)
 
 end
 
-function EntityFallingState:render()
+function CreatureFallingState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))

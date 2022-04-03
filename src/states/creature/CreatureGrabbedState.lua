@@ -1,6 +1,6 @@
-EntityGrabbedState = Class{__includes = BaseState}
+CreatureGrabbedState = Class{__includes = BaseState}
 
-function EntityGrabbedState:init(entity)
+function CreatureGrabbedState:init(entity)
     self.entity = entity
 
     self.entity:changeAnimation('grabbed-' .. self.entity.direction)
@@ -8,11 +8,11 @@ function EntityGrabbedState:init(entity)
     -- TODO: do some fun dangling animations
 end
 
-function EntityGrabbedState:processAI(params, dt)
+function CreatureGrabbedState:processAI(params, dt)
     
 end
 
-function EntityGrabbedState:render()
+function CreatureGrabbedState:render()
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
