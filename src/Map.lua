@@ -38,8 +38,8 @@ function Map:generateCreatures()
         table.insert(self.creatures, Creature {
             animations = CREATURE_DEFS[type].animations,
             walkSpeed = CREATURE_DEFS[type].walkSpeed or 20,
-            x = math.random(0, VIRTUAL_WIDTH),
-            y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT),
+            x = math.random(0, VIRTUAL_WIDTH - CREATURE_DEFS[type].width),
+            y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - CREATURE_DEFS[type].height),
             width = CREATURE_DEFS[type].width,
             height =  CREATURE_DEFS[type].height,
         })
@@ -130,12 +130,9 @@ end
 function Map:update(dt)
     -- self.cursor:update(dt)
 
-    for i = #self.creatures, 1, -1 do
-        local entity = self.creatures[i]
-
-        -- remove entity from the table if health is <= 0
-        entity:processAI({room = self}, dt)
-        entity:update(dt)
+    for k, creature in pairs(self.objects) do
+        creature:processAI({}, dt)
+        creature:update(dt)
     end
 
     for k, object in pairs(self.objects) do
