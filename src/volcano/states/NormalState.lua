@@ -27,11 +27,9 @@ local function calculate_anger_rate(self)
 end
 
 local function generate_craving(self)
-    -- TODO: this is where we specify the kind of offering we want. 
-    -- We might want to create craving classes here so that we can
-    -- read the craving properties in other contexts
-    table.insert(self.cravings, {
-        is_satisfied_by = function(self, offering) return true end
+    local species_list = {'blueTogaHuman', 'sheep'}
+    table.insert(self.cravings, VolcanoCraving {
+        creature_species = species_list[math.random(#species_list)]
     })
     self.time_of_last_craving = self.current_time
 end
@@ -91,16 +89,12 @@ end
 
 function NormalState:update(dt)
     self.current_time = self.current_time + dt
-    local new_offenses = {}
-    for k,v in ipairs(self.offenses) do
-        local age = self.current_time - v.start_time
-        if age < MAX_OFFENSE_AGE then
-            table.insert(new_offenses, v)
-        end
-    end
-    if table.getn(new_offenses) < table.getn(self.offenses) then
-        self.offenses = new_offenses
-    end
+    local current_time = self.current_time
+    self.offenses = filter_in_place(self.offenses, function(o)
+        local age = current_time - o.start_time
+        return age < MAX_OFFENSE_AGE
+    end)
+
     local anger_rate = calculate_anger_rate(self) * dt
     self.anger = math.max(self.anger + anger_rate, 0)
     if self.anger > MAX_ANGER then
@@ -116,23 +110,30 @@ end
 
 -- accept offerings
 
-function NormalState:test_offering(offering)
-    for k,v in ipairs(self.cravings) do
-        if v:is_satisfied_by(offering) then
-            return true
-        end
-    end
+function NormalState:get_cravings()
+    return ipairs(self.cravings)
 end
 
 function NormalState:accept_offering(offering)
-    if offering:is_defective() then
+    if offering.dead then
+        -- ignore the offering - we already killed it.
+        -- Note that this boolean only refers to cleaning up the
+        -- creature from the creatures list - if the creature can actually
+        -- die by other means in a way that we can still pick them up
+        -- and sacrifice them, then we should accept them if they were
+        -- killed in a ritual manner and consider them defective otherwise
+        return
+    end
+    offering.dead = true
+
+    if offering:isDefective() then
         table.insert(self.offenses, {
             descriptor = {
                 -- TODO: add information drawn from the offering
                 reason = "BAD OFFERING"
             }, 
             start_time = self.current_time,
-            anger_rate = NON_MATCHING_OFFENSE_ANGER_RATE
+            anger_rate = BAD_OFFERING_OFFENSE_ANGER_RATE
         })
         self.feedback_reporter:report_defective_offering(offering)
         return
@@ -150,7 +151,8 @@ function NormalState:accept_offering(offering)
     if not craving_satisfied then
         table.insert(self.offenses, {
             descriptor = {
-                -- TODO: add information drawn from the offering
+                species = offering.species,
+                color = offering.color,
                 reason = "NON-MATCHING OFFERING"
             },
             start_time = self.current_time,
@@ -193,7 +195,7 @@ function NormalState:render()
     love.graphics.setFont(gFonts['small'])
     love.graphics.print("Anger Level: "..self.anger, 10, 10)
     for k,v in ipairs(self.cravings) do
-        local craving_text = "Something"
+        local craving_text = "Species: "..tostring(v.creature_species)..", Color: "..tostring(v.creature_color)
         love.graphics.print("Craving: "..craving_text, 20, k * 16 + 20)
     end
     for k,v in ipairs(self.offenses) do

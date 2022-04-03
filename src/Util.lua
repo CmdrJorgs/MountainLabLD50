@@ -59,3 +59,15 @@ function print_r ( t )
     end
     print()
 end
+
+-- Filters a table in place. All items for which the given function
+-- returns falsy are removed.
+function filter_in_place(t, func)
+    local n = #t
+    for i = n,1,-1 do
+        if not func(t[i]) then
+            table.remove(t, i)
+        end
+    end
+    return t
+end

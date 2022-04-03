@@ -46,6 +46,15 @@ function Cursor:update(dt)
                 dx = self.dx,
                 dy = self.dy
             })
+            -- TODO: This should happen when the falling creature collides
+            --       with the volcano's "accept offering" hitbox. For now,
+            --       just accept the offering immediately if it's dragged
+            --       to the top-center of the screen
+            if self.x > VIRTUAL_WIDTH * 0.25 and self.x < VIRTUAL_WIDTH * 0.75
+                and self.y < GROUND_HEIGHT / 2 
+            then
+                self.volcano:accept_offering(self.grabbed_creature)
+            end
             self.grabbed_creature = nil
         end
     end
@@ -66,7 +75,6 @@ function Cursor:get_best_overlapping_creature()
             table.insert(grabbed_creatures, creature)
         end
     end
-    print("Clicked at "..self.x..", "..self.y.." and found "..(#grabbed_creatures).." creatures")
     if #grabbed_creatures == 0 then
         return nil
     end
@@ -77,11 +85,13 @@ function Cursor:get_best_overlapping_creature()
     -- we could reverse this test
     local craved_creatures = {}
     for i, creature in ipairs(grabbed_creatures) do
-        if self.volcano:test_offering(creature) then
-            table.insert(craved_creatures, creature)
+        for j, craving in self.volcano:get_cravings() do
+            if craving:is_satisfied_by(creature) then
+                table.insert(craved_creatures, creature)
+                break
+            end
         end
     end
-    print("Of "..(#grabbed_creatures).." creatures, "..(#craved_creatures).." are craved")
     -- Finally, pick the eligible creature whose center is closest to the cursor
     local eligible_creatures = (#craved_creatures > 0 and craved_creatures) or grabbed_creatures
     local closest_creature = eligible_creatures[1]

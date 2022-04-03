@@ -2,6 +2,9 @@ CreatureIdleState = Class{__includes = BaseState}
 
 function CreatureIdleState:init(creature)
     self.creature = creature
+    if not self.creature then
+        error("Cannot operate idle state with a nil creature")
+    end
 
     --self.creature:changeAnimation('idle-' .. self.creature.direction)
     self.creature:changeAnimation('idle-' .. 'down') -- todo when we have the sprites for each direction remove this

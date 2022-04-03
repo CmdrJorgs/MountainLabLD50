@@ -2,10 +2,10 @@ Creature = Class{}
 
 function generateHey(type)
     local soundsList = { 'angrylilhey', 'deephey', 'madhey', 'hey-sheep' }
-    if type == 'blueTogaHuman' then
+    if species == 'blueTogaHuman' then
         table.insert(soundsList, 'oi')
     end
-    if type == 'sheep' then
+    if species == 'sheep' then
         return 'hey-sheep'
     end
     return soundsList[math.random(#soundsList)]
@@ -16,7 +16,6 @@ function Creature:init(def)
     -- in top-down games, there are four directions instead of two
     self.direction = 'down'
     self.type = def.type
-    self.hey = generateHey(def.type)
 
     self.animations = self:createAnimations(def.animations)
 
@@ -34,7 +33,14 @@ function Creature:init(def)
 
     self.health = def.health
 
-    --self.dead = false
+    -- creature typing for volcano and sounds
+    self.species = def.species
+    self.color = def.color
+    self.isSickly = def.isSickly or false
+
+    self.hey = generateHey(def.type)
+
+    self.dead = false
 end
 
 function Creature:createAnimations(animations)
@@ -48,6 +54,11 @@ function Creature:createAnimations(animations)
     end
 
     return animationsReturned
+end
+
+-- Used by the volcano to determine whether a creature is a worthy sacrifice.
+function Creature:isDefective()
+    return self.isSickly
 end
 
 --[[

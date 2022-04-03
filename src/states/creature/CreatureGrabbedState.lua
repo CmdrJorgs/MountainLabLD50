@@ -1,9 +1,12 @@
 CreatureGrabbedState = Class{__includes = BaseState}
 
-function CreatureGrabbedState:init(entity)
-    self.entity = entity
+function CreatureGrabbedState:init(creature)
+    self.creature = creature
+    if not self.creature then
+        error("Cannot operate grabbed state with a nil creature")
+    end
 
-    self.entity:changeAnimation('grabbed-' .. 'down' )-- self.entity.direction)
+    self.creature:changeAnimation('grabbed-' .. 'down' )-- self.creature.direction)
 
     -- TODO: do some fun dangling animations
 end
@@ -13,11 +16,7 @@ function CreatureGrabbedState:processAI(params, dt)
 end
 
 function CreatureGrabbedState:render()
-    local anim = self.entity.currentAnimation
+    local anim = self.creature.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
-
-     --love.graphics.setColor(1, 0, 1, 1)
-     --love.graphics.rectangle('line', self.entity.x, self.entity.y, self.entity.width, self.entity.height)
-     --love.graphics.setColor(1, 1, 1, 1)
+        math.floor(self.creature.x - self.creature.offsetX), math.floor(self.creature.y - self.creature.offsetY))
 end
