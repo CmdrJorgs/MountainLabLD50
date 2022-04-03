@@ -113,6 +113,14 @@ end
 
 -- accept offerings
 
+function NormalState:test_offering(offering)
+    for k,v in ipairs(self.cravings) do
+        if v:is_satisfied_by(offering) then
+            return true
+        end
+    end
+end
+
 function NormalState:accept_offering(offering)
     if offering:is_defective() then
         table.insert(self.offenses, {

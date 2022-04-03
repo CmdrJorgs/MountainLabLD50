@@ -11,7 +11,7 @@ end
 function love.load()
     math.randomseed(os.time())
     love.window.setTitle('Vesuvius')
-    love.graphics.setDefaultFilter('nearest', 'nearest')
+    love.graphics.setDefaultFilter('linear', 'linear', 2)
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
