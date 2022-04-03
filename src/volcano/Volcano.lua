@@ -61,12 +61,12 @@ function Volcano:processAI(params, dt)
     self.state_machine:processAI(params, dt)
 end
 
-function Volcano:test_offering(offering)
+function Volcano:get_cravings()
     local current = self.state_machine.current
-    if current.test_offering ~= nil then
-        return current:test_offering(offering)
+    if current.get_cravings ~= nil then
+        return current:get_cravings()
     else
-        return false
+        return ipairs({})
     end
 end
 

@@ -47,17 +47,6 @@ function PlayState:update(dt)
 
     self.map:update(dt)
 
-    -- Test code for feeding offerings to the volcano
-    if love.keyboard.wasPressed('z') then
-        self.volcano:accept_offering({
-            is_defective = function(self) return false end
-        })
-    end
-    if love.keyboard.wasPressed('x') then
-        self.volcano:accept_offering({
-            is_defective = function(self) return true end
-        })
-    end
     self.volcano:update(dt)
     if self.volcano:is_exploded() then
         gStateMachine:change("gameOver")

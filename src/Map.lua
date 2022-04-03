@@ -25,34 +25,42 @@ function Map:init()
 end
 
 --[[
-    Randomly creates an assortment of enemies for the player to fight.
+    Randomly creates an assortment of creatures for the player to sacrifice.
 ]]
 function Map:generateCreatures()
-    local species = {'blueTogaHuman', 'sheep'}
+    for i = 1, INIT_CREATURE_COUNT do
+        self:generateCreature()
+    end
+end
+
+function Map:generateCreature()
+    local type_list = {'blueTogaHuman', 'sheep'}
+    local type = type_list[math.random(#type_list)]
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
-    for i = 1, INIT_CREATURE_COUNT do
-        local type = species[math.random(#species)]
+    local creature = Creature {
+        type = type,
+        species = CREATURE_DEFS[type].species,
+        color = CREATURE_DEFS[type].color,
+        animations = CREATURE_DEFS[type].animations,
+        walkSpeed = CREATURE_DEFS[type].walkSpeed or 20,
+        x = math.random(0, VIRTUAL_WIDTH - CREATURE_DEFS[type].width),
+        y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - CREATURE_DEFS[type].height),
+        width = CREATURE_DEFS[type].width,
+        height =  CREATURE_DEFS[type].height,
+        isSickly = (math.random() < CREATURE_SICKLY_CHANCE),
+    }
 
-        table.insert(self.creatures, Creature {
-            animations = CREATURE_DEFS[type].animations,
-            walkSpeed = CREATURE_DEFS[type].walkSpeed or 20,
-            x = math.random(0, VIRTUAL_WIDTH - CREATURE_DEFS[type].width),
-            y = math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - CREATURE_DEFS[type].height),
-            width = CREATURE_DEFS[type].width,
-            height =  CREATURE_DEFS[type].height,
-            type = type,
-        })
+    table.insert(self.creatures, creature)
 
-        self.creatures[i].stateMachine = StateMachine {
-            ['walk'] = function() return CreatureWalkState(self.creatures[i]) end,
-            ['idle'] = function() return CreatureIdleState(self.creatures[i]) end,
-            ['grabbed'] = function() return CreatureGrabbedState(self.creatures[i]) end,
-            ['falling'] = function() return CreatureFallingState(self.creatures[i]) end,
-        }
+    creature.stateMachine = StateMachine {
+        ['walk'] = function() return CreatureWalkState(creature) end,
+        ['idle'] = function() return CreatureIdleState(creature) end,
+        ['grabbed'] = function() return CreatureGrabbedState(creature) end,
+        ['falling'] = function() return CreatureFallingState(creature) end,
+    }
 
-        self.creatures[i]:changeState('idle')
-    end
+    creature:changeState('idle')
 end
 
 --[[
@@ -114,6 +122,8 @@ end
 
 function Map:update(dt)
     -- self.cursor:update(dt)
+
+    filter_in_place(self.creatures, function(c) return not c.dead end)
 
     for i = 1, #self.creatures, 1 do
         local creatureA = self.creatures[i]
