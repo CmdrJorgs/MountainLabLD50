@@ -1,24 +1,24 @@
-local ExplodingState = Class{__includes = BaseState}
+VolcanoExplodingState = Class{__includes = BaseState}
 
 local SCREEN_WIPE_TIME = 5
 local EXPLOSION_TIME = 6
 
-function ExplodingState:init(volcano)
+function VolcanoExplodingState:init(volcano)
     self.volcano = volcano
 end
 
-function ExplodingState:enter(enterParams)
+function VolcanoExplodingState:enter(enterParams)
     self.current_time = 0
 end
 
-function ExplodingState:update(dt)
+function VolcanoExplodingState:update(dt)
     self.current_time = self.current_time + dt
     if self.current_time > EXPLOSION_TIME then
         self.volcano.state_machine:change('exploded')
     end
 end
 
-function ExplodingState:render()
+function VolcanoExplodingState:render()
     love.graphics.setColor(1,1,1,1)
     love.graphics.draw(
         gTextures['volcano'],
@@ -32,9 +32,7 @@ function ExplodingState:render()
         self.volcano.height / 2
     )
 
+    -- TODO: This should be a separate object in front of everything
     love.graphics.setColor(1,0.7,0)
     love.graphics.rectangle("fill",0,0,VIRTUAL_WIDTH,self.current_time / SCREEN_WIPE_TIME * VIRTUAL_HEIGHT)
-    -- TODO: Draw the volcano exploding here
 end
-
-return ExplodingState

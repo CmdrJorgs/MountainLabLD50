@@ -1,4 +1,4 @@
-local NormalState = Class{__includes = BaseState}
+VolcanoNormalState = Class{__includes = BaseState}
 
 local MAX_ANGER = 100
 local BASE_ANGER_RATE = -0.1
@@ -58,11 +58,11 @@ local function try_generate_craving(self)
 end
 
 -- state management
-function NormalState:init(volcano)
+function VolcanoNormalState:init(volcano)
     self.volcano = volcano
 end
 
-function NormalState:enter(enterParams)
+function VolcanoNormalState:enter(enterParams)
     self.anger = 0
     self.cravings = {}
     self.offenses = {}
@@ -77,12 +77,12 @@ function NormalState:enter(enterParams)
     }
 end
 
-function NormalState:exit()
+function VolcanoNormalState:exit()
 end
 
 -- update
 
-function NormalState:update(dt)
+function VolcanoNormalState:update(dt)
     self.current_time = self.current_time + dt
     local current_time = self.current_time
     self.offenses = filter_in_place(self.offenses, function(o)
@@ -99,17 +99,17 @@ end
 
 -- process AI
 
-function NormalState:processAI(params, dt)
+function VolcanoNormalState:processAI(params, dt)
     try_generate_craving(self)
 end
 
 -- accept offerings
 
-function NormalState:get_cravings()
+function VolcanoNormalState:get_cravings()
     return ipairs(self.cravings)
 end
 
-function NormalState:accept_offering(offering)
+function VolcanoNormalState:accept_offering(offering)
     if offering.dead then
         -- ignore the offering - we already killed it.
         -- Note that this boolean only refers to cleaning up the
@@ -159,7 +159,7 @@ end
 
 -- render
 
-function NormalState:render()
+function VolcanoNormalState:render()
     local VOLCANO_STAGE = 1
     if self.anger < 10 then
         VOLCANO_STAGE = 1
@@ -198,5 +198,3 @@ function NormalState:render()
         love.graphics.print("Offense: "..offense_text, VIRTUAL_WIDTH / 2, k * 16 + 20)
     end
 end
-
-return NormalState

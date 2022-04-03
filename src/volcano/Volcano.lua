@@ -9,13 +9,6 @@
 
 Volcano = Class{}
 
--- TODO: Is there a way to avoid absolute pathnames here?
-local NormalState = require "src/volcano/states/NormalState"
-local ExplodingState = require "src/volcano/states/ExplodingState"
-local ExplodedState = require "src/volcano/states/ExplodedState"
-
--- local helper functions
-
 --[[
     The volcano has three main states:
     - Normal: The normal gameplay loop - the volcano slowly builds up anger, develops cravings,
@@ -29,9 +22,9 @@ function Volcano:init(params)
     self.height = 220
     local volcano = self
     self.state_machine = StateMachine{
-        normal = function() return NormalState(volcano) end,
-        exploding = function() return ExplodingState(volcano) end,
-        exploded = function() return ExplodedState(volcano) end,
+        normal = function() return VolcanoNormalState(volcano) end,
+        exploding = function() return VolcanoExplodingState(volcano) end,
+        exploded = function() return VolcanoExplodedState(volcano) end,
     }
     -- Enter the normal state, passing state change functions into the parameters
     self.state_machine:change("normal", { 

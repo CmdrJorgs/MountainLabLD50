@@ -36,5 +36,9 @@ require 'src/states/game/IntroState'
 require 'src/states/game/PlayState'
 require 'src/states/game/GameOverState'
 
+require "src/states/volcano/VolcanoNormalState"
+require "src/states/volcano/VolcanoExplodingState"
+require "src/states/volcano/VolcanoExplodedState"
+
 require 'src/volcano/Volcano'
 require 'src/volcano/VolcanoCraving'
