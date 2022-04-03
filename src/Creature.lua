@@ -21,7 +21,12 @@ function Creature:init(def)
 
     self.health = def.health
 
-    --self.dead = false
+    -- creature typing for volcano
+    self.species = def.species
+    self.color = def.color
+    self.isSickly = def.isSickly or false
+
+    self.dead = false
 end
 
 function Creature:createAnimations(animations)
@@ -35,6 +40,11 @@ function Creature:createAnimations(animations)
     end
 
     return animationsReturned
+end
+
+-- Used by the volcano to determine whether a creature is a worthy sacrifice.
+function Creature:isDefective()
+    return self.isSickly
 end
 
 --[[
