@@ -3,8 +3,9 @@ VolcanoNormalState = Class{__includes = BaseState}
 local MAX_ANGER = 100
 local BASE_ANGER_RATE = -0.1
 local CRAVING_ANGER_RATE = 1.1
-local BAD_OFFERING_OFFENSE_ANGER_RATE = 0.5
-local NON_MATCHING_OFFENSE_ANGER_RATE = 0.3
+local SATISFACTION_ANGER_REDUCTION = 10
+local BAD_OFFERING_OFFENSE_ANGER_RATE = 0.8
+local NON_MATCHING_OFFENSE_ANGER_RATE = 0.2
 local MAX_OFFENSE_AGE = 10
 local MIN_CRAVING_INTERVAL = 6
 local MAX_CRAVING_INTERVAL = 15
@@ -76,6 +77,7 @@ function VolcanoNormalState:enter(enterParams)
         report_defective_offering = function() end,
         report_exploding = function() end,
     }
+    generate_craving(self)
 end
 
 function VolcanoNormalState:exit()
@@ -141,6 +143,7 @@ function VolcanoNormalState:accept_offering(offering)
         if v:is_satisfied_by(offering) then
             craving_satisfied = true
             table.remove(self.cravings, k)
+            self.anger = self.anger - SATISFACTION_ANGER_REDUCTION
             self.feedback_reporter:report_satisfied(v, offering)
             break
         end
@@ -187,16 +190,4 @@ function VolcanoNormalState:render()
         self.volcano.width / 2,
         self.volcano.height / 2
     )
-
-    -- TODO: Definitely decide where this should go
-    love.graphics.setFont(gFonts['small'])
-    love.graphics.print("Anger Level: "..self.anger, 10, 10)
-    for k,v in ipairs(self.cravings) do
-        local craving_text = "Species: "..tostring(v.creature_species)..", Color: "..tostring(v.creature_color)
-        love.graphics.print("Craving: "..craving_text, 20, k * 16 + 20)
-    end
-    for k,v in ipairs(self.offenses) do
-        local offense_text = v.descriptor.reason
-        love.graphics.print("Offense: "..offense_text, VIRTUAL_WIDTH / 2, k * 16 + 20)
-    end
 end
