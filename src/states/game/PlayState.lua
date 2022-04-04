@@ -23,31 +23,42 @@ function PlayState:exit()
 end
 
 function PlayState:generateVolcanoFeedbackReporter()
-    -- TODO: Make these functions actually do something
     local s = self
     local function generate_speech_bubble(text)
         table.insert(s.decorations, TextSpeechBubble{
             text = text,
-            x = VIRTUAL_WIDTH * 2 / 3,
-            y = GROUND_HEIGHT / 2,
+            x = math.random() / 3 * VIRTUAL_WIDTH,
+            y = math.random() / 2 * GROUND_HEIGHT,
             fontName = 'small',
         })
     end
+    local function get_offering_text(response_type, offering)
+        local offering_species = offering.species
+        local defaults = gVolcanoFeedbackText[response_type]['default']
+        local specifics = gVolcanoFeedbackText[response_type][offering_species] or {}
+        local i = math.random(#defaults + #specifics)
+        if i > #defaults then
+            return specifics[i - #defaults]
+        else
+            return defaults[i]
+        end
+    end
     return {
         -- Called when the volcano is satisfied with its offerings
-        report_satisfied = function(craving, offering)
-            generate_speech_bubble('That was finger-lickin good')
+        report_satisfied = function(self, craving, offering)
+            generate_speech_bubble(get_offering_text('satisfied', offering))
         end,
         -- Called when the volcano is given something it did not want
-        report_non_matching_offering = function(offering)
-            generate_speech_bubble('That was not what I wanted')
+        report_non_matching_offering = function(self, offering)
+            generate_speech_bubble(get_offering_text('non-matching', offering))
         end,
         -- Called when the volcano is given something undesirable,
         -- such as a sick animal
-        report_defective_offering = function(offering)
-            generate_speech_bubble('That was gross, man')
+        report_defective_offering = function(self, offering)
+            generate_speech_bubble(get_offering_text('bad-offering', offering))
         end,
-        report_exploding = function()
+        -- Called when the volcano explodes
+        report_exploding = function(self)
             table.insert(s.decorations, VolcanoScreenWipe{})
         end
     }
