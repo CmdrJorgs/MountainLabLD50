@@ -34,7 +34,7 @@ function Map:generateCreatures()
 end
 
 function Map:generateCreature()
-    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'bird', 'goat', 'dog'}
+    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'dog', 'goat', 'bird'}
     local type = type_list[math.random(#type_list)]
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
@@ -73,8 +73,8 @@ function Map:generateObjects()
         local type = props[math.random(#props)]
 
         table.insert(self.objects, GameObject(
-                GAME_OBJECT_DEFS['house'],
-                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS['house'].width),
+                GAME_OBJECT_DEFS[type],
+                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS[type].width),
                 math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - GAME_OBJECT_DEFS[type].height)
         ))
 
