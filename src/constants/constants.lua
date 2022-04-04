@@ -2,13 +2,8 @@ require 'src/constants/creature_defs'
 require 'src/constants/game_objects'
 require 'src/constants/text'
 require 'src/constants/graphics'
+require 'src/constants/screen_constants'
 require 'src/constants/sounds'
-
-VIRTUAL_WIDTH = 768
-VIRTUAL_HEIGHT = 432
-
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
 
 --
 -- map constants

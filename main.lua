@@ -1,24 +1,15 @@
 require 'src/Dependencies'
 
-development = true
-
-if development then
-    function love.conf(t)
-        t.console = true
-    end
-end
-
 function love.load()
     math.randomseed(os.time())
-    love.window.setTitle('Vesuvius')
-    love.graphics.setDefaultFilter('linear', 'linear', 2)
-
+    
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         vsync = true,
         resizable = true
     })
 
+    love.graphics.setDefaultFilter('linear', 'linear', 2)
     love.graphics.setFont(gFonts['small'])
 
     gStateMachine = StateMachine {
