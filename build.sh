@@ -4,16 +4,43 @@
 # TODO Don't forget to download the distro folders for win32,64 and mac and unzip in the build folders
 
 GAME_NAME=vesuvius
-LOVE_V=11.3
+LOVE_V=11.4
 COMPANY_NAME=MountainLabGames
 ROOT_DIR=$(pwd)
 
-# Build
-zip -9 -r build/${GAME_NAME}.love . -x "build/*" -x "output/*" -x ".*" -x "_lesson/*" -FSr
+# Build the game for the love2d engine
+zip -9 -r build/${GAME_NAME}.love . -x "build/*" -x "output/*" -x ".*" -FSr
+
 if [[ ! -d "output" ]]; then
     mkdir output
 fi
-# Compile for different platforms
+
+# Compile for different platforms w/ source (love2d)
+
+# TODO allow each build type to be toggleable
+cd build
+if  [[ ! -d "love.app" ]]; then
+    curl -L -o ./love-${LOVE_V}-macos.zip https://github.com/love2d/love/releases/download/$LOVE_V/love-$LOVE_V-macos.zip
+    unzip love-${LOVE_V}-macos.zip
+fi
+
+if [[ ! -d "love-${LOVE_V}-ios-source" ]]; then
+    curl -L -o ./love-${LOVE_V}-ios-source.zip https://github.com/love2d/love/releases/download/$LOVE_V/love-$LOVE_V-ios-source.zip
+    unzip love-${LOVE_V}-ios-source.zip
+fi
+
+if [[ ! -d "love-${LOVE_V}-win32" ]]; then
+    curl -L -o ./love-${LOVE_V}-win32.zip https://github.com/love2d/love/releases/download/${LOVE_V}/love-${LOVE_V}-win32.zip
+    unzip love-${LOVE_V}-win32.zip
+fi
+
+if [[ ! -d "love-${LOVE_V}-win64" ]]; then
+    curl -L -o ./love-${LOVE_V}-win64.zip https://github.com/love2d/love/releases/download/${LOVE_V}/love-${LOVE_V}-win64.zip
+    unzip love-${LOVE_V}-win64.zip
+fi
+cd ..
+
+# TODO download Android or others
 
 ## Windows
 ### Build
@@ -27,11 +54,12 @@ zip -9 -r ../../output/${GAME_NAME}-win32.zip . -x "*.DS_Store" -FSr
 cd ../love-${LOVE_V}-win64/
 zip -9 -r ../../output/${GAME_NAME}-win64.zip . -x "*.DS_Store" -FSr
 cd "$ROOT_DIR"
-# Mac
-## https://github.com/love2d/love/releases/download/11.3/love-11.3-macos.zip
 
+
+# Mac TODO figure out why game.app isn't working
 mkdir build/${GAME_NAME}.app/
 cp -r build/love.app/ build/${GAME_NAME}.app
+cp -r build/__MACOSX/ build/${GAME_NAME}.app/
 cp build/${GAME_NAME}.love build/${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
 ## modify plist
 ###    <key>CFBundleIdentifier</key>
@@ -48,11 +76,12 @@ sed -i '' 's@<key>UTExportedTypeDeclarations</key>@@g' build/${GAME_NAME}.app/Co
 #			<key>UTTypeConformsTo</key>
 #			  ...
 #   </array>
-#pwd
 #cd build/
 #ls
 #zip -9 -r ../output/${GAME_NAME}-osx.zip ${GAME_NAME}.app -FSr
 #cd ..
+
+
 ## Iphone
 # https://github.com/love2d/love/releases/download/11.3/love-11.3-ios-source.zip
 # use mac dep
