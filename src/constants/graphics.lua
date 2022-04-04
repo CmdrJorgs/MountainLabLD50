@@ -14,6 +14,8 @@ gTextures = {
     ['volcano'] = love.graphics.newImage('graphics/map/volcano440x220.png'),
     --['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
     --['character-pot-walk'] = love.graphics.newImage('graphics/character_pot_walk.png'),
+    ['umbrella_tree'] = love.graphics.newImage('graphics/map/umbrella_tree32x32.png'),
+    ['tall_tree'] = love.graphics.newImage('graphics/map/tall_tree31x27.png'),
 }
 
 gFrames = {
@@ -30,6 +32,8 @@ gFrames = {
     --['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
     --['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     --['character-pot-walk'] = GenerateQuads(gTextures['character-pot-walk'], 16, 32),
+    ['umbrella_tree'] = GenerateQuads(gTextures['umbrella_tree'], GAME_OBJECT_DEFS['umbrella_tree'].width, GAME_OBJECT_DEFS['umbrella_tree'].height),
+    ['tall_tree'] = GenerateQuads(gTextures['tall_tree'], GAME_OBJECT_DEFS['tall_tree'].width, GAME_OBJECT_DEFS['tall_tree'].height),
 }
 
 gFonts = {

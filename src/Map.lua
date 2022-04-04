@@ -68,7 +68,7 @@ end
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
 function Map:generateObjects()
-    local props = { 'house' }
+    local props = { 'house' , 'umbrella_tree' , 'tall_tree' }
     for i = 1, INIT_CREATURE_COUNT do
         local type = props[math.random(#props)]
 
