@@ -9,51 +9,48 @@ gVolcanoFeedbackText = {
         ['bird'] = {
             'Actually tastes like chicken!',
             'That was finger lickin good!',
-            'The chicken must have been hungry...thats a history joke',
-            'Good! I hope it was Ovid\'s',
+            'The chicken must have been hungry...thats a history joke.',
+            'Good! I hope it was Ovid\'s.',
         },
         ['blueTogaHuman'] = {
-            'It\'s Greek to me',
-            'Athena is mad, but I\'m happy',
+            'It\'s Greek to me.',
+            'Athena is mad, but I\'m happy.',
         },
         ['whiteTogaHuman'] = {
             'Varus, give me MORE legions!',
-            'even better than a Caesar salad!',
+            'Even better than a Caesar salad!',
         },
         ['goat'] = {
-            'an excellent gift for Apollo',
+            'An excellent gift for Apollo.',
         },
         ['sheep'] = {
             'Good mutton!',
             'Bene Bidens!',
-            'I needed a wool sweater',
+            'I needed a wool sweater.',
         },
         ['default'] = {
             'Tastes like chicken!',
             'Mmm, that hit the spot.',
-            'Vulcan is pleased',
-            'te ago gratis!',
+            'Vulcan is pleased.',
+            'Te ago gratis!',
         }
     },
     ['non-matching'] = {
         ['whiteTogaHuman'] = {
             'Admit it, you just wanted this guy\'s sesterces.',
-            'ugh...another bland Marcus',
-            'Quid Struis? close but try a different one',
+            'Ugh...another bland Marcus.',
+            'Quid Struis? Close, but try a different one.',
         },
         ['sheep'] = {
             'Mutton is SOOOOOOOOO A.D. 78.',
         },
         ['default'] = {
-            "That wasn't what I wanted",
-            'Ugh, not in the mood for this...',
+            "I'm hungry, but not for that.",
         }
     },
     ['dont-want-anything'] = {
         ['default'] = {
             "I'm stuffed! Let me digest a bit.",
-            "You're just plugging me up now.",
-            "Give it a rest, will ya?",
         }
     },
     ['bad-offering'] = {
@@ -64,7 +61,7 @@ gVolcanoFeedbackText = {
             'This one has no teeth!',
         },
         ['sheep'] = {
-            'Diseased mutton!',
+            'This one has foot rot!',
         },
         ['default'] = {
             'That one was disgusting!',

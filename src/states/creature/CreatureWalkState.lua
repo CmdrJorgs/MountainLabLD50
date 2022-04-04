@@ -86,7 +86,6 @@ end
 
 function CreatureWalkState:render()
     local anim = self.creature.currentAnimation
-    love.graphics.setColor(1,1,1,1)
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.creature.x - self.creature.offsetX), math.floor(self.creature.y - self.creature.offsetY))
     
