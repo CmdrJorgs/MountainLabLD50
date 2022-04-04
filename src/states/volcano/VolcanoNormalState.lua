@@ -27,7 +27,7 @@ local function calculate_anger_rate(self)
 end
 
 local function generate_craving(self)
-    local species_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep'}
+    local species_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'dog', 'goat', 'bird'}
     table.insert(self.cravings, VolcanoCraving {
         creature_species = species_list[math.random(#species_list)]
     })

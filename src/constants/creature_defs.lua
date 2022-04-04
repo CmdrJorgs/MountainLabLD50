@@ -144,32 +144,6 @@ CREATURE_DEFS = {
             },
         },
     },
-    --[[ ['greekCitizen'] = {
-        species = 'greekCitizen',
-        grabSound = 'oi',
-        color = 'none',
-        height = 25,
-        width = 25,
-        walkSpeed = 15,
-        texture = 'greekCitizen',
-        animations = {
-            ['idle-down'] = {
-                frames = { 1 },
-                interval = 0.2,
-                texture = 'greekCitizen',
-            },
-            ['grabbed-down'] = {
-                frames = { 1 },
-                interval = 0.02,
-                texture = 'greekCitizen',
-            },
-            ['fall-down'] = {
-                frames = { 1 },
-                interval = 0.2,
-                texture = 'greekCitizen',
-            },
-        },
-    }, ]]
     ['dog'] = {
         species = 'dog',
         grabSound = 'hey-sheep',
