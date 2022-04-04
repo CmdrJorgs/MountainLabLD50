@@ -7,6 +7,7 @@ Event = require 'lib/knife.event'
 push = require 'lib/push'
 Timer = require 'lib/knife.timer'
 require 'src/Util'
+require 'src/VariableIntervalRoller'
 
 require 'src/constants/constants'
 

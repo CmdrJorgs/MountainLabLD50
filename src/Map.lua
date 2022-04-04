@@ -11,6 +11,12 @@ function Map:init()
     self.creatures = {}
     self:generateCreatures()
 
+    self.creature_generation_roller = VariableIntervalRoller{
+        min_seconds = MIN_CREATURE_RESPAWN_TIME,
+        max_seconds = MAX_CREATURE_RESPAWN_TIME,
+        roll_interval_seconds = CREATURE_RESPAWN_ROLL_INTERVAL,
+    }
+
     -- game objects in the room
     self.objects = {}
     self:generateObjects()
@@ -86,11 +92,11 @@ function Map:update(dt)
     filter_in_place(self.objects, function(o) return not o.dead end)
 
     self.current_time = (self.current_time or 0) + dt
-    if self.current_time > RESPAWN_TIME then
-        self.current_time = 0
-        if math.random() > .75 then
-            self:generateCreature()
-        end
+
+    self.creature_generation_roller:update(dt)
+    local creature_count_to_generate = self.creature_generation_roller:poll_events()
+    for i=1,creature_count_to_generate do
+        self:generateCreature()
     end
 
     for i = 1, #self.creatures, 1 do
