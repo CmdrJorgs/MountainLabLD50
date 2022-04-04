@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Vesuvius
+Comment=Appease the raging Mount Vesuvius by sacrificing people and animals
+MimeType=application/x-love-game;
+Exec=vesuvius %f
+Type=Application
+Categories=Development;Game;
+Terminal=false
+Icon=vesuvius
+NoDisplay=true
