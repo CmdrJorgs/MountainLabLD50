@@ -17,7 +17,7 @@ gVolcanoFeedbackText = {
             'Athena is mad, but I\'m happy',
         },
         ['whiteTogaHuman'] = {
-            'Varus give me MORE legions!',
+            'Varus, give me MORE legions!',
             'even better than a Caesar salad!',
         },
         ['goat'] = {
@@ -47,6 +47,13 @@ gVolcanoFeedbackText = {
         ['default'] = {
             "That wasn't what I wanted",
             'Ugh, not in the mood for this...',
+        }
+    },
+    ['dont-want-anything'] = {
+        ['default'] = {
+            "I'm stuffed! Let me digest a bit.",
+            "You're just plugging me up now.",
+            "Give it a rest, will ya?",
         }
     },
     ['bad-offering'] = {

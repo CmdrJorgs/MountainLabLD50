@@ -5,11 +5,13 @@ local BASE_ANGER_RATE = -0.1
 local CRAVING_ANGER_RATE = 1.1
 local SATISFACTION_ANGER_REDUCTION = 10
 local BAD_OFFERING_OFFENSE_ANGER_RATE = 0.8
+local DONT_WANT_ANYTHING_OFFENSE_ANGER_RATE = 0.3
 local NON_MATCHING_OFFENSE_ANGER_RATE = 0.2
 local MAX_OFFENSE_AGE = 10
 local MIN_CRAVING_INTERVAL = 6
 local MAX_CRAVING_INTERVAL = 15
 local MIN_CRAVING_PROBABILITY_TO_ROLL_AGAINST = 0.05
+local TIME_WHEN_ALL_CRAVINGS_ARE_SPECIES_SPECIFIC = 180
 
 -- local helper functions
 
@@ -28,10 +30,13 @@ local function calculate_anger_rate(self)
 end
 
 local function generate_craving(self)
-    local species_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'dog', 'goat', 'bird'}
-    table.insert(self.cravings, VolcanoCraving {
-        creature_species = species_list[math.random(#species_list)]
-    })
+    local craving_params = {}
+    local species_specific_craving_chance = math.min(1, self.current_time / TIME_WHEN_ALL_CRAVINGS_ARE_SPECIES_SPECIFIC)
+    if math.random() < species_specific_craving_chance then
+        local species_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'dog', 'goat', 'bird'}
+        craving_params.creature_species = species_list[math.random(#species_list)]
+    end
+    table.insert(self.cravings, VolcanoCraving (craving_params))
     self.time_of_last_craving = self.current_time
 end
 
@@ -74,6 +79,7 @@ function VolcanoNormalState:enter(enterParams)
     self.feedback_reporter = enterParams.feedback_reporter or {
         report_satisfied = function() end,
         report_non_matching_offering = function() end,
+        report_dont_want_anything = function() end,
         report_defective_offering = function() end,
         report_exploding = function() end,
     }
@@ -128,13 +134,28 @@ function VolcanoNormalState:accept_offering(offering)
     if offering:isDefective() then
         table.insert(self.offenses, {
             descriptor = {
-                -- TODO: add information drawn from the offering
+                species = offering.species,
+                color = offering.color,
                 reason = "BAD OFFERING"
             }, 
             start_time = self.current_time,
             anger_rate = BAD_OFFERING_OFFENSE_ANGER_RATE
         })
         self.feedback_reporter:report_defective_offering(offering)
+        return
+    end
+
+    if #self.cravings == 0 then
+        table.insert(self.offenses, {
+            descriptor = {
+                species = offering.species,
+                color = offering.color,
+                reason = "DON'T WANT ANYTHING"
+            }, 
+            start_time = self.current_time,
+            anger_rate = DONT_WANT_ANYTHING_OFFENSE_ANGER_RATE
+        })
+        self.feedback_reporter:report_dont_want_anything(offering)
         return
     end
     
