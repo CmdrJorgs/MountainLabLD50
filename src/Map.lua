@@ -68,13 +68,13 @@ end
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
 function Map:generateObjects()
-    local props = { 'house' }
+    local props = { 'house' , 'umbrella_tree' , 'tall_tree' }
     for i = 1, INIT_CREATURE_COUNT do
         local type = props[math.random(#props)]
 
         table.insert(self.objects, GameObject(
-                GAME_OBJECT_DEFS['house'],
-                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS['house'].width),
+                GAME_OBJECT_DEFS[type],
+                math.random(0, VIRTUAL_WIDTH - GAME_OBJECT_DEFS[type].width),
                 math.random(GROUND_HEIGHT, VIRTUAL_HEIGHT - GAME_OBJECT_DEFS[type].height)
         ))
 
