@@ -34,7 +34,7 @@ function Map:generateCreatures()
 end
 
 function Map:generateCreature()
-    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'bird', 'goat'}
+    local type_list = {'blueTogaHuman', 'whiteTogaHuman', 'sheep', 'greekCitizen'}
     local type = type_list[math.random(#type_list)]
     --local color = {'none', 'white', 'purple', 'blue'} TODO
 
@@ -68,7 +68,7 @@ end
     Randomly creates an assortment of obstacles for the player to navigate around.
 ]]
 function Map:generateObjects()
-    local props = { 'house', 'tree3' }
+    local props = { 'house' , 'umbrella_tree' , 'tall_tree'}
     for i = 1, INIT_CREATURE_COUNT do
         local type = props[math.random(#props)]
 
