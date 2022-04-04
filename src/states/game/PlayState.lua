@@ -52,6 +52,10 @@ function PlayState:generateVolcanoFeedbackReporter()
         report_non_matching_offering = function(self, offering)
             generate_speech_bubble(get_offering_text('non-matching', offering))
         end,
+        -- Called when the volcano is given something and it has no outstanding cravings
+        report_dont_want_anything = function(self, offering)
+            generate_speech_bubble(get_offering_text('dont-want-anything', offering))
+        end,
         -- Called when the volcano is given something undesirable,
         -- such as a sick animal
         report_defective_offering = function(self, offering)

@@ -28,7 +28,6 @@ end
 
 function CreatureIdleState:render()
     local anim = self.creature.currentAnimation
-    love.graphics.setColor(1,1,1,1) -- sometimes love will be stuck on a different color from a previous graphics call
     local quad = gFrames[anim.texture][anim:getCurrentFrame()]
     if quad == nil then
         error('Creature Idle state error: ' .. self.creature.type .. ' frame: ' .. anim:getCurrentFrame())
