@@ -16,7 +16,7 @@ CREATURE_DEFS = {
     --},
     ['sheep'] = {
         species = 'sheep',
-        grabSound = 'sheepP',
+        grabSound = 'hey-sheep',
         color = 'none',
         width = 25,
         height = 20,
@@ -43,7 +43,7 @@ CREATURE_DEFS = {
     ['blueTogaHuman'] = {
         species = 'blueTogaHuman',
         color = 'blue',
-        grabSound = 'togaP',
+        grabSound = 'deephey',
         width = 50,
         height = 48,
         walkSpeed = 15,
