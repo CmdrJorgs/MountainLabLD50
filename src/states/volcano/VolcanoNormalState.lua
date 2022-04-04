@@ -171,13 +171,13 @@ end
 
 function VolcanoNormalState:render()
     local VOLCANO_STAGE = 1
-    if self.anger < 10 then
+    if self.anger < 1 then
         VOLCANO_STAGE = 1
-    elseif self.anger < 50 then
+    elseif self.anger < 40 then
         VOLCANO_STAGE = 2
-    elseif self.anger < 75 then
+    elseif self.anger < 70 then
         VOLCANO_STAGE = 3
-    elseif self.anger < 95 then
+    elseif self.anger < 90 then
         VOLCANO_STAGE = 4
     else
         VOLCANO_STAGE = 5
