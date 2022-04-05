@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 # Run from root of project
 # https://love2d.org/wiki/Game_Distribution
-# TODO Don't forget to download the distro folders for win32,64 and mac and unzip in the build folders
+# By Bryce Shelley
 
 GAME_NAME=vesuvius
 LOVE_V=11.4
 COMPANY_NAME=MountainLabGames
 ROOT_DIR=$(pwd)
 
-# Build the game for the love2d engine
-zip -9 -r build/${GAME_NAME}.love . -x "build/*" -x "output/*" -x ".*" -FSr
-
 if [[ ! -d "output" ]]; then
     mkdir output
 fi
+
+if [[ ! -d "build" ]]; then
+    mkdir build
+fi
+
+# Build the game for the love2d engine
+zip -9 -r build/${GAME_NAME}.love . -x "build/*" -x "output/*" -x ".*" -FSr
 
 # Compile for different platforms w/ source (love2d)
 
@@ -38,7 +42,7 @@ if [[ ! -d "love-${LOVE_V}-win64" ]]; then
     curl -L -o ./love-${LOVE_V}-win64.zip https://github.com/love2d/love/releases/download/${LOVE_V}/love-${LOVE_V}-win64.zip
     unzip love-${LOVE_V}-win64.zip
 fi
-cd ..
+cd "$ROOT_DIR"
 
 # TODO download Android or others
 
@@ -56,18 +60,20 @@ zip -9 -r ../../output/${GAME_NAME}-win64.zip . -x "*.DS_Store" -FSr
 cd "$ROOT_DIR"
 
 
-# Mac TODO figure out why game.app isn't working
-mkdir build/${GAME_NAME}.app/
-cp -r build/love.app/ build/${GAME_NAME}.app
-cp -r build/__MACOSX/ build/${GAME_NAME}.app/
-cp build/${GAME_NAME}.love build/${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
-## modify plist
-###    <key>CFBundleIdentifier</key>
-sed -i '' 's@<string>org.love2d.love</string>@<string>com.'"${COMPANY_NAME}"'.'"${GAME_NAME}"'</string>@g' build/${GAME_NAME}.app/Contents/Info.plist
-###    <key>CFBundleName</key>
-sed -i '' 's@<string>LÖVE</string>@<string>'"${GAME_NAME}"'</string>@g' build/${GAME_NAME}.app/Contents/Info.plist
-###    <key>UTExportedTypeDeclarations</key>
-sed -i '' 's@<key>UTExportedTypeDeclarations</key>@@g' build/${GAME_NAME}.app/Contents/Info.plist
+# Mac
+cd build
+mkdir ${GAME_NAME}.app/
+cp -r love.app/ ${GAME_NAME}.app
+cp ${GAME_NAME}.love ${GAME_NAME}.app/Contents/Resources/${GAME_NAME}.love
+
+# TODO fix this
+# ## modify plist
+# ###    <key>CFBundleIdentifier</key>
+# sed -i '' 's@<string>org.love2d.love</string>@<string>com.'"${COMPANY_NAME}"'.'"${GAME_NAME}"'</string>@g' ${GAME_NAME}.app/Contents/Info.plist
+# ###    <key>CFBundleName</key>
+# sed -i '' 's@<string>LÖVE</string>@<string>'"${GAME_NAME}"'</string>@g' ${GAME_NAME}.app/Contents/Info.plist
+# ###    <key>UTExportedTypeDeclarations</key>
+# sed -i '' 's@<key>UTExportedTypeDeclarations</key>@@g' ${GAME_NAME}.app/Contents/Info.plist
 
 # TODO delete
 # <key>UTExportedTypeDeclarations</key>
@@ -78,9 +84,8 @@ sed -i '' 's@<key>UTExportedTypeDeclarations</key>@@g' build/${GAME_NAME}.app/Co
 #   </array>
 #cd build/
 #ls
-#zip -9 -r ../output/${GAME_NAME}-osx.zip ${GAME_NAME}.app -FSr
-#cd ..
-
+zip -9 -r ../output/${GAME_NAME}-osx.zip ${GAME_NAME}.app -FSr
+cd "$ROOT_DIR"
 
 ## Iphone
 # https://github.com/love2d/love/releases/download/11.3/love-11.3-ios-source.zip
